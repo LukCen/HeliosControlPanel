@@ -6,3 +6,6 @@
 
 # 0.3.0
 - dodanie listy połączeń
+
+# 0.3.1
+- zmiana renderowania listy - zmapowana do generacji tablicy
