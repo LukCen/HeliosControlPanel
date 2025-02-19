@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9529f07d89458fdc03b212e09c4e01567712ff5be6565fb0a503d84bb0c02c46
-size 421
+
+const connectionListUl = document.querySelector('.connection-list')
+const connectionListItem = document.createElement('li')
+const connectionsHeader = document.querySelector('thead')
+const parsingtest = connectionList.testing()
+const connectionsArray = []
+parsingtest.then((vals) => {
+  // for (let i = 0; i < vals.length; i++) {
+  //   const tr = document.createElement('tr')
+  //   console.log(...vals)
+  //   // connectionListItem.innerText = `Host: ${vals[i].hostname} | Nazwa: ${vals[i].username} | Serwer: ${vals[i].database}`
+  //   // connectionListUl.append(connectionListItem)
+  // }
+  connectionsArray.push(...vals)
+}).then(() => {
+  connectionsArray.map((e) => {
+    connectionsHeader.innerHTML +=
+      `<tr>
+      <td>${e.id}</td>
+      <td>${e.hostname}</td>
+      <td>${e.username}</td>
+      <td>${e.database}</td>
+    </tr>`
+  })
+})
+
+
+// console.log(connectionsArray)
+// console.log(mapped)

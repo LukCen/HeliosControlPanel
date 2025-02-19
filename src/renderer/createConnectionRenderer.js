@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:df18623e5ab8232df0fda87e3786ed2a4d07dd45571e7000dd0b2e56b74ec1b0
-size 718
+const btnAttemptConnection = document.querySelector('#button-connect')
+
+
+btnAttemptConnection.addEventListener('click', () => {
+  const msg = document.querySelector('.connections-feedback-msg')
+  const hostname = document.querySelector('#hostname')?.value
+  const username = document.querySelector('#username')?.value
+  const password = document.querySelector('#password')?.value
+  const database = document.querySelector('#database')?.value
+  connections.createNewConnection(hostname, username, password, database)
+  connections.connectionStatus((message) => {
+    // console.log('connectionStatus fired')
+    console.log(`message: ${message}`)
+    msg.innerText = message
+  })
+  console.log('connection created')
+})

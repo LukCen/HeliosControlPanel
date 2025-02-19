@@ -1,3 +1,37 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1c2afd56b6e4a4dd37661ebe9b676c574c2c2a427ff4785ad0212f10dc9789a3
-size 1161
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <title>Create a new connection</title>
+</head>
+
+<body>
+  <h1>Utwórz nowe połączenie</h1>
+
+  <div class="container-column">
+    <div class="inputs-server"></div>
+    <div class="input-groups">
+      <div class="input-group hostname">
+        <label for="hostname">Nazwa hosta</label><input type="text" id="hostname">
+      </div>
+      <div class="input-group username">
+        <label for="username">Nazwa użytkownika</label><input type="text" id="username">
+      </div>
+      <div class="input-group password">
+        <label for="password">Hasło</label><input type="password" id="password">
+      </div>
+      <div class="input-group database">
+        <label for="database">Baza danych</label><input type="text" id="database">
+      </div>
+      <span class="connections-feedback-msg"></span>
+
+      <button id="button-connect">Connect</button>
+    </div>
+  </div>
+  <script src="../../src/renderer/createConnectionRenderer.js"></script>
+</body>
+
+</html>

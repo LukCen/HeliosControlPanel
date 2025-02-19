@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6d874bd4d14fb7195b86932b1fbcdd77381c52186c6763d8cebdd2644c58e1e6
-size 517
+const { contextBridge, ipcRenderer } = require('electron')
+
+contextBridge.exposeInMainWorld('connections', {
+  createNewConnection: (hostname, username, password, database) => ipcRenderer.invoke('create-connection', hostname, username, password, database),
+  sendConnectionData: (hostname, username, database, isSuccessful) => ipcRenderer.invoke('fetchData', hostname, username, database, isSuccessful),
+  connectionStatus: (callback) => ipcRenderer.on('connection-status', (_event, message) => callback(message))
+})

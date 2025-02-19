@@ -1,3 +1,108 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0694c283cb007f8792bc2179daab68a35e7303e9c2b91ec9d176422a2059af13
-size 1527
+@font-face {
+  font-family: 'GoodTiming';
+  src: url('../fonts/GoodTiming/GoodTiming.otf');
+}
+@font-face {
+  font-family: 'TommySoft';
+  src: url('../fonts/TommySoft/MADE\ Tommy\ Soft\ Regular.otf');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'TommySoft';
+  src: url('../fonts/TommySoft/MADE\ Tommy\ Soft\ Light.otf');
+  font-weight: lighter;
+}
+@font-face {
+  font-family: 'TommySoft';
+  src: url('../fonts/TommySoft/MADE\ Tommy\ Soft\ Bold.otf');
+  font-weight: bold;
+}
+body {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  font-family: 'TommySoft', sans-serif;
+  font-weight: normal;
+}
+
+button {
+  border: none;
+  background: #f5f5f5;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:hover {
+  background: #d6d6d6;
+}
+.btn-active {
+  background: steelblue;
+  color: white;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-family: 'GoodTiming', sans-serif;
+}
+
+p, button, input {
+  font-size: 1.5rem;
+}
+
+button {
+  padding: 5px 10px;
+  border: 2px solid transparent;
+}
+button:active {
+  border: 2px solid #333;
+}
+
+table {
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px 25px;
+}
+thead th {
+  background: #333;
+  color: #f5f5f5;
+
+  font-weight: normal;
+}
+tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+tbody tr:nth-child(even) {
+  background: #d6d6d6;
+}
+/* utilities ################################ */
+
+.container-column {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25em;
+  align-items: center;
+  max-width: 100%;
+}
+.input-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 100%;
+
+}
+.input-group {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+
+/* connection list */
+
+.connection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
