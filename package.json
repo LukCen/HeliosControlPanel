@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f52745c4c6407686f4568ad75e6bb1a6841631c07b840183af5349cf11c5218c
-size 456
+{
+  "name": "helios_dev",
+  "version": "0.3.1",
+  "description": "Simple local server management tool",
+  "main": "./src/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Łukasz Cena",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
