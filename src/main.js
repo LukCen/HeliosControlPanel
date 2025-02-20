@@ -1,7 +1,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { createWindow } from './utils/createWindow.js'
-import { connectionStart } from './utils/_db_connect.mjs'
+import { connectionStart, checkConnectionStatus } from './utils/_db_connect.mjs'
 
 // html files
 
@@ -44,9 +44,9 @@ ipcMain.handle('create-connection', async (e, hostname, username, password, data
   console.log('creating connection...')
   const win = BrowserWindow.getFocusedWindow()
   // console.log(win)
-
   try {
     await connectionStart(hostname, username, password, database, win)
+    await checkConnectionStatus()
     win.webContents.send('connection-status', `Connection with '${hostname}' successful.`)
 
     activeConnections.push(addNewConnection(highestConnectionId, hostname, username, database))
@@ -68,3 +68,4 @@ ipcMain.on('request-connection-info', (e) => {
 })
 
 ipcMain.handle('testing', getCurrentConnections)
+ipcMain.handle('check-active-connection', () => { return checkConnectionStatus() })
