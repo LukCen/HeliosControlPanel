@@ -2,6 +2,7 @@ import mysql2 from 'mysql2/promise'
 import express from 'express'
 import cors from 'cors'
 let db = null
+let server = null
 export async function connectionStart(hostname, username, password, database) {
   const app = express()
   const port = 3000
@@ -35,7 +36,7 @@ export async function connectionStart(hostname, username, password, database) {
     })
 
     // backend
-    app.listen(port, () => {
+    server = app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
     });
 
@@ -52,4 +53,17 @@ export async function checkConnectionStatus() {
   } catch (e) {
     return false
   }
+}
+
+export async function closeConnection() {
+  if (db) {
+    await db.end()
+    console.log(`Database connection closed successfully.`)
+  }
+  if (server) {
+    server.close(() => {
+      console.log('Server connection closed.')
+    })
+  }
+  console.log('closeConnection tapped')
 }

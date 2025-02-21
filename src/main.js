@@ -1,7 +1,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { createWindow } from './utils/createWindow.js'
-import { connectionStart, checkConnectionStatus } from './utils/_db_connect.mjs'
+import { connectionStart, checkConnectionStatus, closeConnection } from './utils/_db_connect.mjs'
 
 // html files
 
@@ -55,7 +55,7 @@ ipcMain.handle('create-connection', async (e, hostname, username, password, data
     throw new Error(`An error has occured: ${e}`)
   }
 })
-
+// display a window with current connections
 ipcMain.on('display-connection', (e) => {
   createWindow(1200, 768, winPaths.connectionList, ['preload', 'connectionListPreload.js'])
 })
@@ -69,3 +69,4 @@ ipcMain.on('request-connection-info', (e) => {
 
 ipcMain.handle('testing', getCurrentConnections)
 ipcMain.handle('check-active-connection', () => { return checkConnectionStatus() })
+ipcMain.handle('stop-connection', closeConnection)

@@ -1,7 +1,7 @@
 
 const connectionListUl = document.querySelector('.connection-list')
 const connectionListItem = document.createElement('li')
-const connectionsHeader = document.querySelector('thead')
+const connectionsBody = document.querySelector('tbody')
 const parsingtest = connectionList.testing()
 const isActive = connectionList.checkActiveConnectionStatus()
 let connectionStatus = null;
@@ -14,17 +14,26 @@ isActive.then((e) => connectionStatus = e).then(() => {
   }).then(() => {
 
     connectionsArray.map((e) => {
-      connectionsHeader.innerHTML +=
-        `<tr>
+      connectionsBody.innerHTML +=
+        `<tr data-id='${e.id}'>
         <td>${e.id}</td>
         <td>${e.hostname}</td>
         <td>${e.username}</td>
         <td>${e.database}</td>
         <td>${connectionStatus}</td>
+       <td><button data-id='${e.id}' class="btn --connection-remove">Remove</button></td>
       </tr>`
+
+    })
+    const btnRemoveConnection = document.querySelectorAll('.--connection-remove')
+    btnRemoveConnection.forEach((b) => {
+      b.addEventListener('click', () => {
+        console.log(`button id ${b.dataset.id} clicked`)
+        connectionList.stopConnection()
+        b.closest('tr').remove()
+      })
     })
   })
-
 })
 
 
