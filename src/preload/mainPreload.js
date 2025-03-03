@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('main', {
   createConnectionClose: () => ipcRenderer.send('create-connection-window-close'),
   openConnectionList: () => ipcRenderer.send('display-connection'),
   fetchConnectionList: () => ipcRenderer.send('fetch-connection-list'),
+  transferFileOpen: () => ipcRenderer.send('transfer-file-open'),
   displayVersion: () => ipcRenderer.invoke('fetch-app-version')
 })

@@ -20,7 +20,9 @@ export async function connectionStart(hostname, username, password, database) {
   // endpoint
   try {
     app.get(`/api/products`, async (req, res) => {
+
       try {
+        await showAllTables()
         const [rows] = await db.query('SELECT * FROM products')
         res.json(rows)
         // console.log('new connection established!')

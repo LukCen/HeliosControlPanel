@@ -17,9 +17,14 @@ main.displayVersion().then(v => {
 })
 
 const btnConnectionList = document.querySelector('#connectionList')
-
+const btnTransferFile = document.querySelector('#transferFile')
 btnConnectionList.addEventListener('click', () => {
   console.log('con list open')
   main.openConnectionList()
   main.fetchConnectionList()
+})
+
+
+btnTransferFile.addEventListener('click', () => {
+  main.transferFileOpen()
 })

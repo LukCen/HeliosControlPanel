@@ -30,7 +30,7 @@ body {
 button {
   border: none;
   background: #f5f5f5;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 button:hover {
@@ -70,11 +70,26 @@ thead th {
 
   font-weight: normal;
 }
+tbody tr button {
+  transition: filter .25s ease-in;
+  filter: brightness(1.0)
+}
 tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+
+tbody tr:nth-child(odd) button {
+  background: #d6d6d6
+}
 tbody tr:nth-child(even) {
   background: #d6d6d6;
+}
+tbody tr:nth-child(even) button {
+  background: #f5f5f5
+}
+
+tbody tr button:hover {
+  filter: brightness(1.1);
 }
 /* utilities ################################ */
 
@@ -98,11 +113,7 @@ tbody tr:nth-child(even) {
   justify-content: space-between;
 }
 
-
 /* connection list */
-
-.connection-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+table button {
+  display: table-row;
 }

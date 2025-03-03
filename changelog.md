@@ -9,3 +9,7 @@
 
 # 0.3.1
 - zmiana renderowania listy - zmapowana do generacji tablicy
+
+# 0.4.0
+
+- zamykanie połączeń przez przycisk

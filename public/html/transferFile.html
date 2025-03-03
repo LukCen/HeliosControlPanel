@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <title>Przesyłanie plików</title>
+</head>
+
+<body>
+  <h1>Serwer plików : <span id="server-name"></span></h1>
+  <div class="container-column">
+    <div class="input-group">
+      <label for="send-file">Dodaj pliki</label><input multiple type="file" name="" id="send-file">
+    </div>
+    <button class="btn --send-files">Prześlij pliki</button>
+    <ul class="selected-file-list"></ul>
+  </div>
+  <script src="../../src/renderer/transferFileRenderer.js"></script>
+</body>
+
+</html>

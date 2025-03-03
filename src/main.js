@@ -2,6 +2,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { createWindow } from './utils/createWindow.js'
 import { connectionStart, checkConnectionStatus, closeConnection } from './utils/_db_connect.mjs'
+import { transferFiles } from './utils/fileTransfer.mjs'
 
 // html files
 
@@ -14,7 +15,8 @@ function addNewConnection(id, hostname, username, database) {
 const winPaths = {
   main: 'public/html/index.html',
   createConnection: 'public/html/createConnection.html',
-  connectionList: 'public/html/connectionList.html'
+  connectionList: 'public/html/connectionList.html',
+  transferFile: 'public/html/transferFile.html'
 }
 
 app.whenReady().then(() => {
@@ -70,3 +72,24 @@ ipcMain.on('request-connection-info', (e) => {
 ipcMain.handle('testing', getCurrentConnections)
 ipcMain.handle('check-active-connection', () => { return checkConnectionStatus() })
 ipcMain.handle('stop-connection', closeConnection)
+
+
+// image server
+
+ipcMain.on('transfer-file-open', (e) => {
+  createWindow(1200, 768, winPaths.transferFile, ['preload', 'transferFilePreload.js'])
+})
+
+async function getFiles(files) {
+  try {
+    await files
+  } catch (e) {
+    throw new Error(`getFiles error: ${e}`)
+  }
+}
+
+ipcMain.on('send-images', async (e, contents) => {
+  console.log('contents below - main.js')
+  // console.log(contents)
+  await transferFiles(contents)
+})
