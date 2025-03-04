@@ -80,13 +80,6 @@ ipcMain.on('transfer-file-open', (e) => {
   createWindow(1200, 768, winPaths.transferFile, ['preload', 'transferFilePreload.js'])
 })
 
-async function getFiles(files) {
-  try {
-    await files
-  } catch (e) {
-    throw new Error(`getFiles error: ${e}`)
-  }
-}
 
 ipcMain.on('send-images', async (e, contents) => {
   console.log('contents below - main.js')

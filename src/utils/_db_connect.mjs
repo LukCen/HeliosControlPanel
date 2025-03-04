@@ -1,8 +1,11 @@
 import mysql2 from 'mysql2/promise'
 import express from 'express'
 import cors from 'cors'
+
+
 let db = null
 let server = null
+
 export async function connectionStart(hostname, username, password, database) {
   const app = express()
   const port = 3000
@@ -10,6 +13,7 @@ export async function connectionStart(hostname, username, password, database) {
   app.use(cors())
   app.use(express.json())
 
+  // dane bazy mysql z ktora sie laczymy - ciagniete przez GUI ze strony createConnection
   db = await mysql2.createConnection({
     host: hostname,
     user: username,
@@ -22,8 +26,11 @@ export async function connectionStart(hostname, username, password, database) {
     app.get(`/api/products`, async (req, res) => {
 
       try {
-        await showAllTables()
-        const [rows] = await db.query('SELECT * FROM products')
+        // nie pamiętam co ta funkcja robi więc póki co zostawię - chyba wszystko działa więc, wygląda na to że to jakaś pozostałość po testach
+        // await showAllTables()
+
+
+        const [rows] = await db.query('SELECT * FROM products') // tutaj wpisz zapytanie MySQL jakie chcesz wykonać
         res.json(rows)
         // console.log('new connection established!')
         isActive = true;
@@ -39,7 +46,7 @@ export async function connectionStart(hostname, username, password, database) {
 
     // backend
     server = app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
+      console.log(`Server running at http://${hostname}:${port}`);
     });
 
   } catch (e) {
