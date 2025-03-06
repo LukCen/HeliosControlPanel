@@ -26,3 +26,5 @@ const remotePath = `/sciezka/do/pliku`
 
 
 Tymczasowo zakodowanie na sztywno - w przyszłości przerobię to na bardziej wszechstronny interfejs.
+
+Aby włączyć aplikację, należy przejść włączyć konsolę/terminal, przejść do folderu w którym znajduje się plik 'main.js' tej aplikacji, i uruchomić komendę 'npm run start' bądź, gdy nie mamy zainstalowanego NPM, 'electron .'
