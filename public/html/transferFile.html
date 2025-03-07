@@ -9,13 +9,29 @@
 </head>
 
 <body>
-  <h1>Serwer plików : <span id="server-name"></span></h1>
+  <h1>Serwer plików</h1>
+  <div class="container-column">
+    <h2>Ustawienia serwera</h2>
+    <div class="--assets container-column">
+      <div class="input-group">
+        <label for="asset-host">Host</label><input id="asset-host" type="text" placeholder="127.0.0.1">
+      </div>
+      <div class="input-group">
+        <label for="asset-port">Port</label><input id="asset-port" type="text" placeholder="22">
+      </div>
+      <div class="input-group">
+        <label for="asset-user">Użytkownik</label><input id="asset-user" type="text" placeholder="your-server-username">
+      </div>
+      <div class="input-group">
+        <label for="asset-host">Hasło</label><input id="asset-host" type="password">
+      </div>
+    </div>
+  </div>
   <div class="container-column">
     <div class="input-group">
       <label for="send-file">Dodaj pliki</label><input multiple type="file" name="" id="send-file">
     </div>
     <button class="btn --send-files">Prześlij pliki</button>
-    <ul class="selected-file-list"></ul>
   </div>
   <script src="../../src/renderer/transferFileRenderer.js"></script>
 </body>

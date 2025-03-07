@@ -3,7 +3,7 @@ const fileUploader = document.querySelector('#send-file')
 const selectedFileList = document.querySelector('.selected-file-list')
 const btnSendFiles = document.querySelector('.--send-files')
 const fileReader = new FileReader()
-
+const btnServerSettings = document.querySelector('#btn-server-settings')
 if (btnSendFiles) {
   btnSendFiles.addEventListener('click', () => {
 
@@ -33,3 +33,6 @@ if (btnSendFiles) {
 
 }
 
+btnServerSettings.addEventListener('click', () => {
+  images.serverSettingsOpen()
+})

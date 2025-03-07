@@ -6,8 +6,12 @@ import { transferFiles } from './utils/fileTransfer.mjs'
 
 // html files
 
-const activeConnections = []
-let highestConnectionId = 0
+const activeConnections = [] // zmienna ogólna, istotna dla okna connectionList
+
+const activeWindows = []
+
+let highestConnectionId = 0 // zmienna dla okna connectionList
+
 function addNewConnection(id, hostname, username, database) {
   highestConnectionId++
   return { id, hostname, username, database }
@@ -16,7 +20,8 @@ const winPaths = {
   main: 'public/html/index.html',
   createConnection: 'public/html/createConnection.html',
   connectionList: 'public/html/connectionList.html',
-  transferFile: 'public/html/transferFile.html'
+  transferFile: 'public/html/transferFile.html',
+  assets: 'public/html/assetServerSettings.html'
 }
 
 app.whenReady().then(() => {
@@ -85,4 +90,8 @@ ipcMain.on('send-images', async (e, contents) => {
   console.log('contents below - main.js')
   // console.log(contents)
   await transferFiles(contents)
+})
+
+ipcMain.on('server-settings-open', (e) => {
+  createWindow(1200, 768, winPaths.assets, ['preload', 'assetServerSettingsPreload.js'])
 })

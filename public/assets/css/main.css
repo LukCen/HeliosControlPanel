@@ -97,8 +97,9 @@ tbody tr button:hover {
   display: flex;
   flex-direction: column;
   font-size: 1.25em;
-  align-items: center;
+  /* align-items: center; */
   max-width: 100%;
+  gap: 16px;
 }
 .input-groups {
   display: flex;
@@ -111,8 +112,12 @@ tbody tr button:hover {
   display: flex;
   gap: 10px;
   justify-content: space-between;
+  align-items: start;
 }
 
+input::placeholder {
+  opacity: 50%;
+}
 /* connection list */
 table button {
   display: table-row;
