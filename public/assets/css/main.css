@@ -122,3 +122,8 @@ input::placeholder {
 table button {
   display: table-row;
 }
+/* asset server info */
+.connection-list {
+  display: flex;
+  gap: 16px;
+}

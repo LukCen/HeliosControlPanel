@@ -14,26 +14,34 @@
     <h2>Ustawienia serwera</h2>
     <div class="--assets container-column">
       <div class="input-group">
-        <label for="asset-host">Host</label><input id="asset-host" type="text" placeholder="127.0.0.1">
+        <label for="asset-name">Nazwa połączenia</label><input id="asset-name" type="text"
+          placeholder="Np. 'Dom' albo 'Filmy'">
       </div>
       <div class="input-group">
-        <label for="asset-port">Port</label><input id="asset-port" type="text" placeholder="22">
+        <label for="asset-host">Host</label><input id="asset-host" type="text" placeholder="Np. 127.0.0.1">
       </div>
       <div class="input-group">
-        <label for="asset-user">Użytkownik</label><input id="asset-user" type="text" placeholder="your-server-username">
+        <label for="asset-port">Port</label><input id="asset-port" type="text" placeholder="Np. 22">
       </div>
       <div class="input-group">
-        <label for="asset-host">Hasło</label><input id="asset-host" type="password">
+        <label for="asset-user">Użytkownik</label><input id="asset-user" type="text" placeholder="Nazwa użytkownika">
       </div>
+      <div class="input-group">
+        <label for="asset-pw">Hasło</label><input id="asset-pw" type="password">
+      </div>
+      <button class="--save btn">Dodaj do listy połączeń</button>
     </div>
+    <ul class="--connections container-column">
+
+    </ul>
   </div>
   <div class="container-column">
     <div class="input-group">
-      <label for="send-file">Dodaj pliki</label><input multiple type="file" name="" id="send-file">
+      <label for="send-file">Dodaj pliki</label><input multiple type="file" id="send-file">
     </div>
     <button class="btn --send-files">Prześlij pliki</button>
   </div>
-  <script src="../../src/renderer/transferFileRenderer.js"></script>
+  <script type="module" src="../../src/renderer/transferFileRenderer.js"></script>
 </body>
 
 </html>

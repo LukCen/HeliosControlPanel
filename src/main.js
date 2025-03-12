@@ -95,3 +95,7 @@ ipcMain.on('send-images', async (e, contents) => {
 ipcMain.on('server-settings-open', (e) => {
   createWindow(1200, 768, winPaths.assets, ['preload', 'assetServerSettingsPreload.js'])
 })
+
+ipcMain.on('append', (e, args) => {
+  console.log('append method on connectionList fired')
+})
