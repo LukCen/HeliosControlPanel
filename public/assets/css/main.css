@@ -127,3 +127,10 @@ table button {
   display: flex;
   gap: 16px;
 }
+
+.connectionInfoItemCell:nth-child(even) {
+  background: skyblue;
+}
+.connectionInfoItemCell:nth-child(odd) {
+  background: steelblue;
+}

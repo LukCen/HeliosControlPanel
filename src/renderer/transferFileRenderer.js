@@ -26,11 +26,11 @@ class AssetServer {
     console.log(`createConnectionItem return block triggered`)
   }
   getConnectionList(arr) {
+    const listItem = document.createElement('li')
     for (let i = 0; i < arr.length; i++) {
       const itemParam = arr[i]
       console.log('-----------------------------')
       console.log(itemParam)
-      const listItem = document.createElement('li')
       const itemId = document.createElement('div')
       const itemHost = document.createElement('div')
       const itemUser = document.createElement('div')
@@ -41,6 +41,7 @@ class AssetServer {
 
       listItem.innerText = `${itemParam.id} - ${itemParam.host} - ${itemParam.user}`
       connContainer.appendChild(listItem)
+      console.log(listItem)
     }
   }
 }
@@ -52,7 +53,7 @@ btnSaveConnection.addEventListener('click', () => {
   const Connection = new AssetServer(assetHost.value, assetPort.value, assetUser.value, assetPw.value)
   Connection.saveConnection(savedConnections)
   Connection.getConnectionList(savedConnections)
-  // console.log(savedConnections)
+
 })
 
 
