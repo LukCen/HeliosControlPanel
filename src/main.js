@@ -3,6 +3,14 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { createWindow } from './utils/createWindow.js'
 import { connectionStart, checkConnectionStatus, closeConnection } from './utils/_db_connect.mjs'
 import { transferFiles } from './utils/fileTransfer.mjs'
+import { writeToFile } from './utils/writeToFile.mjs'
+import path from "node:path"
+import { fileURLToPath } from 'url'
+
+// z jakiegos powodu srodowiskowa z node nie dziala wiec robie takie durne obejscie
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // html files
 
@@ -99,3 +107,10 @@ ipcMain.on('server-settings-open', (e) => {
 ipcMain.on('append', (e, args) => {
   console.log('append method on connectionList fired')
 })
+
+ipcMain.on('writeToConfigFile', ((e, filePath, contents) => {
+  const compositeFilePath = path.join(__dirname, "../", filePath)
+  writeToFile(compositeFilePath, contents)
+  console.log('---------------------- MAIN -----------------')
+  console.log(`filePath: ${compositeFilePath}, contents: ${contents}`)
+}))

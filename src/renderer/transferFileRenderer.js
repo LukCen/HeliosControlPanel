@@ -12,6 +12,8 @@ const assetPw = document.querySelector('#asset-pw')
 const connContainer = document.querySelector('ul.--connections')
 const btnSaveConnection = document.querySelector('.--save')
 
+const configFilePath = 'connection_config.json'
+
 class AssetServer {
   constructor(host, port, user, pw) {
     this.id = null,
@@ -23,7 +25,7 @@ class AssetServer {
   saveConnection(arr) {
     this.id = arr.length + 1
     arr.push(this)
-    console.log(`createConnectionItem return block triggered`)
+    // console.log(`createConnectionItem return block triggered`)
   }
   getConnectionList(arr) {
     const listItem = document.createElement('li')
@@ -41,7 +43,7 @@ class AssetServer {
 
       listItem.innerText = `${itemParam.id} - ${itemParam.host} - ${itemParam.user}`
       connContainer.appendChild(listItem)
-      console.log(listItem)
+      // console.log(listItem)
     }
   }
 }
@@ -53,7 +55,9 @@ btnSaveConnection.addEventListener('click', () => {
   const Connection = new AssetServer(assetHost.value, assetPort.value, assetUser.value, assetPw.value)
   Connection.saveConnection(savedConnections)
   Connection.getConnectionList(savedConnections)
-
+  // const jsonifyConnection = JSON.stringify(Connection)
+  images.writeToConfigFile(configFilePath, Connection)
+  console.log('transferFileRenderer - writeToConfig fired')
 })
 
 
