@@ -1,6 +1,6 @@
 {
   "name": "helios_dev",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Simple local server management tool",
   "main": "./src/main.js",
   "type": "module",
