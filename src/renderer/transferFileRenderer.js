@@ -27,39 +27,56 @@ class AssetServer {
     this.id = arr.length + 1
     arr.push(this)
   }
-  displayConnectionList(arr) {
-    const listItem = document.createElement('li')
-    for (let i = 0; i < arr.length; i++) {
-      const itemParam = arr[i]
-      console.log('-----------------------------')
-      console.log(itemParam)
-      const itemId = document.createElement('div')
-      const itemHost = document.createElement('div')
-      const itemUser = document.createElement('div')
-      const itemPort = document.createElement('div')
-      const itemCells = [itemId, itemHost, itemUser, itemPort]
-      listItem.classList.add('connection-list')
-      itemCells.forEach((e) => e.classList.add('connectionInfoItemCell'))
+  // displayConnectionList(arr) {
+  //   const listItem = document.createElement('li')
+  //   for (let i = 0; i < arr.length; i++) {
+  //     const itemParam = arr[i]
+  //     console.log('-----------------------------')
+  //     console.log(itemParam)
+  //     const itemId = document.createElement('div')
+  //     const itemHost = document.createElement('div')
+  //     const itemUser = document.createElement('div')
+  //     const itemPort = document.createElement('div')
+  //     const itemCells = [itemId, itemHost, itemUser, itemPort]
+  //     listItem.classList.add('connection-list')
+  //     itemCells.forEach((e) => e.classList.add('connectionInfoItemCell'))
 
-      listItem.innerText = `${itemParam.id} - ${itemParam.host} - ${itemParam.user}`
-      connContainer.appendChild(listItem)
-      // console.log(listItem)
-    }
-  }
+  //     listItem.innerText = `${itemParam.id} - ${itemParam.host} - ${itemParam.user}`
+  //     connContainer.appendChild(listItem)
+  //     // console.log(listItem)
+  //   }
+  // }
 }
 
+function displayConnectionList(arr) {
+  const listItem = document.createElement('li')
+  for (let i = 0; i < arr.length; i++) {
+    const itemParam = arr[i]
+    console.log('-----------------------------')
+    console.log(itemParam)
+    const itemId = document.createElement('div')
+    const itemHost = document.createElement('div')
+    const itemUser = document.createElement('div')
+    const itemPort = document.createElement('div')
+    const itemCells = [itemId, itemHost, itemUser, itemPort]
+    listItem.classList.add('connection-list')
+    itemCells.forEach((e) => e.classList.add('connectionInfoItemCell'))
+
+    listItem.innerText = `${itemParam.id} - ${itemParam.host} - ${itemParam.user}`
+    connContainer.appendChild(listItem)
+    // console.log(listItem)
+  }
+}
 const savedConnections = [] // lista zapisanych połączeń - umożliwia odpalenie jakiegoś bez konieczności ręcznego wpisywania danych
 
 
 btnSaveConnection.addEventListener('click', () => {
   const Connection = new AssetServer(assetHost.value, assetPort.value, assetUser.value, assetPw.value)
   Connection.saveConnection(savedConnections)
-  Connection.displayConnectionList(savedConnections)
-  // const jsonifyConnection = JSON.stringify(Connection)
+  displayConnectionList(savedConnections)
   images.writeToConfigFile(configFilePath, Connection)
   console.log('transferFileRenderer - writeToConfig fired')
 })
-
 
 
 // przesyłanie pliku do modułu fileTransfer.mjs

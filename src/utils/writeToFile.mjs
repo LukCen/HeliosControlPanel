@@ -1,5 +1,5 @@
 
-import { statSync, readFileSync } from 'node:fs'
+import { statSync, readFileSync, writeFile } from 'node:fs'
 
 export function writeToFile(filePath, contents) {
   const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
@@ -15,7 +15,7 @@ export function writeToFile(filePath, contents) {
   const contentToSave = JSON.stringify(jsonNewFile)
 
   // funkcja dodająca content do pliku - @filepath - sciezka do pliku, podawana w main.js, @contentToSave - nowa zawartosc, definiowana powyzej
-  fs.writeFile(filePath, contentToSave, e => {
+  writeFile(filePath, contentToSave, e => {
     if (e) {
       console.error(e)
     } else {
