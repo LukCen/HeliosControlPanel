@@ -4,16 +4,17 @@ const selectedFileList = document.querySelector('.selected-file-list')
 const btnSendFiles = document.querySelector('.--send-files')
 const fileReader = new FileReader()
 
-const assetName = document.querySelector('#asset-name')
-const assetHost = document.querySelector('#asset-host')
-const assetPort = document.querySelector('#asset-port')
-const assetUser = document.querySelector('#asset-user')
-const assetPw = document.querySelector('#asset-pw')
-const connContainer = document.querySelector('ul.--connections')
-const btnSaveConnection = document.querySelector('.--save')
+const assetName = document.querySelector('#asset-name') // dane polaczenia - nazwa hosta (IP/slowny)
+const assetHost = document.querySelector('#asset-host') // dane polaczenia - nazwa konta administratora serwera
+const assetPort = document.querySelector('#asset-port') // dane polaczenia - port
+const assetUser = document.querySelector('#asset-user') // dane polaczenia - nazwa konta na ktorym postawiony jest serwer (na ktore jest zalogowany w systemie)
+const assetPw = document.querySelector('#asset-pw') // haslo - nie powinno byc wyswietlane
+const connContainer = document.querySelector('ul.--connections') // kontener zewnetrzny na pojedyncze polaczenia
+const btnSaveConnection = document.querySelector('.--save') // przycisk 'dodaj do listy polaczen'
 
-const configFilePath = 'connection_config.json'
+const configFilePath = 'connection_config.json' // nazwa pliku konfiguracyjnego - powinien znajdowac sie w root folderze
 
+// pojedyncze polaczenie z serwerem zasobow
 class AssetServer {
   constructor(host, port, user, pw) {
     this.id = null,
@@ -25,9 +26,8 @@ class AssetServer {
   saveConnection(arr) {
     this.id = arr.length + 1
     arr.push(this)
-    // console.log(`createConnectionItem return block triggered`)
   }
-  getConnectionList(arr) {
+  displayConnectionList(arr) {
     const listItem = document.createElement('li')
     for (let i = 0; i < arr.length; i++) {
       const itemParam = arr[i]
@@ -54,7 +54,7 @@ const savedConnections = [] // lista zapisanych połączeń - umożliwia odpalen
 btnSaveConnection.addEventListener('click', () => {
   const Connection = new AssetServer(assetHost.value, assetPort.value, assetUser.value, assetPw.value)
   Connection.saveConnection(savedConnections)
-  Connection.getConnectionList(savedConnections)
+  Connection.displayConnectionList(savedConnections)
   // const jsonifyConnection = JSON.stringify(Connection)
   images.writeToConfigFile(configFilePath, Connection)
   console.log('transferFileRenderer - writeToConfig fired')
