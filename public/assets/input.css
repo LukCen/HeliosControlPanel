@@ -1,0 +1,13 @@
+@theme {
+  --color-midnight: #1e1e2f;
+  --color-night-sky: #2a2a40;
+  --color-violet: #3d3d5c;
+  --color-purple: #352a40;
+  --color-plum: #402A40;
+  --color-smoky: #f0f0f5;
+}
+@import "tailwindcss";
+
+button, a {
+  cursor: pointer
+}

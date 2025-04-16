@@ -1,25 +1,33 @@
 {
-  "name": "helios_dev",
-  "version": "0.6.2",
-  "description": "Simple local server management tool",
-  "main": "./src/main.js",
-  "type": "module",
+  "name": "helios_v3",
+  "version": "0.0.1",
+  "description": "A connection manager for personal use.",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "build:main": "esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --external:electron",
+    "build:preload": "esbuild src/preload.ts --bundle --platform=node --outfile=dist/preload.js --external:electron",
+    "build:renderer": "esbuild src/renderer.ts --bundle --platform=browser --outfile=dist/renderer.js --external:electron",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "twcompile": "npx @tailwindcss/cli -i ./public/assets/input.css -o ./public/assets/output.css",
+    "start": "npm run twcompile && npm run build && electron dist/main.js"
   },
   "author": "Łukasz Cena",
   "license": "ISC",
   "devDependencies": {
-    "@electron/fuses": "^1.8.0",
-    "@types/ping": "^0.4.4",
-    "electron": "^34.0.2"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "electron": "^35.1.5",
+    "esbuild": "^0.25.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "mysql2": "^3.12.0",
-    "ping": "^0.4.4",
-    "ssh2-sftp-client": "^11.0.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4"
   }
 }

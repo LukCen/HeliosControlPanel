@@ -4,20 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/output.css">
   <title>Helios</title>
 </head>
 
-<body>
-  <h1>Helios Control Panel v.<span class="version"></span></h1>
+<body class="text-smoky">
+  <main class="h-screen w-screen bg-night-sky">
+    <menu class="flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
+      <div class="flex">
+        <img src="../assets/logo.jpg" alt="Helios logo" width="50" height="50">
+        <span class="text-[36px] px-[5px]">Helios Control Panel</span>
+      </div>
+      <div class="flex">
+        <button
+          class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-min.webp" alt="" width="40" height="40"
+            title="Minimize window">
+        </button>
+        <button
+          class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-max.webp" alt="" width="40" height="40"
+            title="Maximize window">
+        </button>
+        <button
+          class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-close.webp" alt="" width="40" height="40"
+            title="Close window">
+        </button>
+      </div>
+    </menu>
+  </main>
 
-  <div class="server-connection">
-    <button id="createConnection">Utwórz połączenie</button>
-    <button id="connectionList">Lista połączeń</button>
-    <button id="transferFile">Serwer zasobów</button>
-  </div>
-  <script src="../../src/renderer/mainRenderer.js"></script>
+  <script src="../../dist/renderer.js"></script>
 </body>
 
 </html>
