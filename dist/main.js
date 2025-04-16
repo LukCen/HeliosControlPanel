@@ -33,10 +33,27 @@ var createWindow = () => {
       preload: import_node_path.default.join(__dirname, "./preload.js")
     }
   });
+  win.setMenuBarVisibility(false);
   win.loadFile("../public/html/index.html");
 };
 import_electron.app.whenReady().then(() => {
   createWindow();
 });
-import_electron.ipcMain.on("test", () => {
+import_electron.ipcMain.on("windowClose", (event) => {
+  const win = import_electron.BrowserWindow.fromWebContents(event.sender);
+  if (win) {
+    win.close();
+  }
+});
+import_electron.ipcMain.on("windowMaximize", (e) => {
+  const win = import_electron.BrowserWindow.fromWebContents(e.sender);
+  if (win) {
+    win.maximize();
+  }
+});
+import_electron.ipcMain.on("windowMinimize", (e) => {
+  const win = import_electron.BrowserWindow.fromWebContents(e.sender);
+  if (win) {
+    win.minimize();
+  }
 });

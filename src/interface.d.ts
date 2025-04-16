@@ -1,5 +1,7 @@
 export interface Main {
-  test(): () => Promise<void>
+  windowClose: () => void,
+  windowMaximize: () => void,
+  windowMinimize: () => void
 }
 
 declare global {

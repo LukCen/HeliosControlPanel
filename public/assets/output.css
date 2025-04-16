@@ -9,6 +9,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+  --spacing: 0.25rem;
   --default-transition-duration: 150ms;
   --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   --default-font-family: var(--font-sans);
@@ -168,6 +169,15 @@
   .flex {
     display: flex;
   }
+  .inline-block {
+    display: inline-block;
+  }
+  .h-\[800px\] {
+    height: 800px;
+  }
+  .h-fit {
+    height: fit-content;
+  }
   .h-screen {
     height: 100vh;
   }
@@ -180,6 +190,9 @@
   .w-\[150px\] {
     width: 150px;
   }
+  .w-\[800px\] {
+    width: 800px;
+  }
   .w-full {
     width: 100%;
   }
@@ -188,6 +201,15 @@
   }
   .max-w-\[40px\] {
     max-width: 40px;
+  }
+  .shrink-1 {
+    flex-shrink: 1;
+  }
+  .grow-1 {
+    flex-grow: 1;
+  }
+  .basis-\[33\.33\%\] {
+    flex-basis: 33.33%;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -205,6 +227,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-1 {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
@@ -218,11 +244,23 @@
   .bg-night-sky {
     background-color: var(--color-night-sky);
   }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
+  }
   .px-\[5px\] {
     padding-inline: 5px;
   }
+  .text-center {
+    text-align: center;
+  }
+  .text-\[26px\] {
+    font-size: 26px;
+  }
   .text-\[36px\] {
     font-size: 36px;
+  }
+  .text-\[64px\] {
+    font-size: 64px;
   }
   .text-smoky {
     color: var(--color-smoky);
@@ -232,9 +270,9 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .duration-250 {
-    --tw-duration: 250ms;
-    transition-duration: 250ms;
+  .duration-150 {
+    --tw-duration: 150ms;
+    transition-duration: 150ms;
   }
   .hover\:border-smoky {
     &:hover {

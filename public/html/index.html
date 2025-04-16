@@ -9,30 +9,51 @@
 </head>
 
 <body class="text-smoky">
-  <main class="h-screen w-screen bg-night-sky">
+  <main class="main-navbar h-screen w-screen bg-night-sky">
+    <!-- main menu - topside of the window -->
     <menu class="flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
       <div class="flex">
         <img src="../assets/logo.jpg" alt="Helios logo" width="50" height="50">
         <span class="text-[36px] px-[5px]">Helios Control Panel</span>
       </div>
       <div class="flex">
-        <button
+        <button title="Minimize window"
           class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-min.webp" alt="" width="40" height="40"
-            title="Minimize window">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-min.webp" alt="" width="40" height="40">
         </button>
-        <button
+        <button title="Maximize window"
           class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-max.webp" alt="" width="40" height="40"
-            title="Maximize window">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-max.webp" alt="" width="40" height="40">
         </button>
-        <button
+        <button title="Close window"
           class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-close.webp" alt="" width="40" height="40"
-            title="Close window">
+          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-close.webp" alt="" width="40" height="40">
         </button>
       </div>
     </menu>
+    <!-- greeting - maybe dynamic if login system exists? -->
+    <h3 class="w-full text-center text-[64px]">Welcome, user!</h3>
+    <!-- connection list - bottom left side of the main windo -->
+    <div class="connection-list flex h-[800px] w-[800px] bg-midnight">
+      <nav class="connection-list-navbar flex justify-between w-full h-fit border-2 border-violet">
+        <img src="" alt="">
+        <span class="text-[26px] inline-block">Lista połączeń</span>
+        <div class="flex h-fit">
+          <button
+            class="btn-add-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
+            <img src="../assets/icon-add.webp" width="30" height="30" alt="">
+          </button>
+          <button
+            class="btn-filter-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
+            <img src="../assets/icon-filter.webp" width="30" height="30" alt="">
+          </button>
+          <button
+            class="btn-refresh-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
+            <img src="../assets/icon-refresh.webp" width="30" height="30" alt="">
+          </button>
+        </div>
+      </nav>
+    </div>
   </main>
 
   <script src="../../dist/renderer.js"></script>
