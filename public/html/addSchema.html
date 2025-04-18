@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/output.css">
+  <title>Add new schema</title>
+</head>
+
+<body class="text-smoky">
+  <main class="h-screen w-screen bg-night-sky">
+    <menu class="main-navbar flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
+      <div class="flex items-center w-full gap-3">
+        <img src="../assets/icon-connection-list.webp" alt="">
+        <span>Create new schema</span>
+      </div>
+      <div class="flex">
+        <button title="Close window"
+          class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150"><img
+            src="../assets/icon-close.webp" alt=""></button>
+      </div>
+    </menu>
+    <form action="" class="w-full p-5">
+      <fieldset class="border-2 border-smoky w-full flex flex-col gap-2 p-5 rounded-xl">
+        <!-- schema name -->
+        <div class="schema-name flex flex-col w-full gap-2">
+          <label for="schema-name">New schema name</label>
+          <input id="schema-name" type="text" placeholder="Your New schema Name">
+        </div>
+        <!-- schema key -->
+        <div class="schema-key flex flex-col">
+          <label for="schema-key">Key</label>
+          <input type="text" id="schema-key" placeholder="host">
+        </div>
+        <!-- schema value -->
+        <div class="schema-value flex flex-col">
+          <label for="schema-value">Value</label>
+          <input type="text" id="schema-value" placeholder="host">
+        </div>
+        <div class="schema-type flex flex-col">
+          <label for="schema-type">Value</label>
+          <select name="schema-type" id="schema-type">
+            <option value="string" selected>string</option>
+            <option value="number">number</option>
+            <option value="object">object</option>
+            <option value="array">array</option>
+            <option value="null">null</option>
+          </select>
+        </div>
+      </fieldset>
+    </form>
+    <div id="schema-preview">
+      <code>
+        This is an example window
+      </code>
+    </div>
+  </main>
+  <script src="../../dist/renderer.js"></script>
+</body>
+
+</html>

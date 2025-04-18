@@ -29,31 +29,52 @@ var createWindow = () => {
   const win = new import_electron.BrowserWindow({
     width: 1600,
     height: 1200,
+    frame: false,
+    // hides the default title bar and controls
+    titleBarStyle: "hidden",
+    // for macOS, apparently
     webPreferences: {
       preload: import_node_path.default.join(__dirname, "./preload.js")
     }
   });
   win.setMenuBarVisibility(false);
-  win.loadFile("../public/html/index.html");
+  win.loadFile("../public/html/main.html");
 };
 import_electron.app.whenReady().then(() => {
   createWindow();
 });
-import_electron.ipcMain.on("windowClose", (event) => {
-  const win = import_electron.BrowserWindow.fromWebContents(event.sender);
-  if (win) {
-    win.close();
-  }
-});
-import_electron.ipcMain.on("windowMaximize", (e) => {
+import_electron.ipcMain.on("defaultWindowControls", (e, payload) => {
   const win = import_electron.BrowserWindow.fromWebContents(e.sender);
   if (win) {
-    win.maximize();
+    switch (payload) {
+      case "close":
+        win.close();
+        break;
+      case "max":
+        win.maximize();
+        break;
+      case "min":
+        win.minimize();
+    }
   }
 });
-import_electron.ipcMain.on("windowMinimize", (e) => {
-  const win = import_electron.BrowserWindow.fromWebContents(e.sender);
-  if (win) {
-    win.minimize();
+import_electron.ipcMain.on("openNewSchemaWindow", (e) => {
+  console.log("schema button pressed");
+  const mainWin = import_electron.BrowserWindow.fromWebContents(e.sender);
+  if (mainWin) {
+    const schemaWin = new import_electron.BrowserWindow({
+      width: 1200,
+      height: 800,
+      frame: false,
+      // hides the default title bar and controls
+      titleBarStyle: "hidden",
+      // for macOS, apparently
+      webPreferences: {
+        preload: import_node_path.default.join(__dirname, "./preload.js")
+      },
+      parent: mainWin
+    });
+    schemaWin.setMenuBarVisibility(false);
+    schemaWin.loadFile("../public/html/addSchema.html");
   }
 });

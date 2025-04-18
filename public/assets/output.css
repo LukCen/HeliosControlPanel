@@ -10,6 +10,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
   --spacing: 0.25rem;
+  --radius-xl: 0.75rem;
   --default-transition-duration: 150ms;
   --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   --default-font-family: var(--font-sans);
@@ -169,6 +170,9 @@
   .flex {
     display: flex;
   }
+  .hidden {
+    display: none;
+  }
   .inline-block {
     display: inline-block;
   }
@@ -186,6 +190,9 @@
   }
   .max-h-\[50px\] {
     max-height: 50px;
+  }
+  .w-\[75px\] {
+    width: 75px;
   }
   .w-\[150px\] {
     width: 150px;
@@ -214,6 +221,9 @@
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
+  .flex-col {
+    flex-direction: column;
+  }
   .items-center {
     align-items: center;
   }
@@ -222,6 +232,15 @@
   }
   .justify-center {
     justify-content: center;
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
+  .rounded-xl {
+    border-radius: var(--radius-xl);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -235,6 +254,9 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
+  .border-smoky {
+    border-color: var(--color-smoky);
+  }
   .border-violet {
     border-color: var(--color-violet);
   }
@@ -246,6 +268,9 @@
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
   }
   .px-\[5px\] {
     padding-inline: 5px;
@@ -282,8 +307,18 @@
     }
   }
 }
+@import url(https://fonts.bunny.net/css?family=alexandria:400,500,600,700);
+body {
+  font-family: 'Alexandria', sans-serif;
+}
 button, a {
   cursor: pointer;
+}
+menu.main-navbar {
+  -webkit-app-region: drag;
+}
+menu.main-navbar button {
+  -webkit-app-region: no-drag;
 }
 @property --tw-rotate-x {
   syntax: "*";

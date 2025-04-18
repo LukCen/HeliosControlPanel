@@ -1,2 +1,3 @@
 Icons from Lucide https://lucide.dev/icons/
-Color theme designed by me
+Font - Alexandria from Bunny Fonts : https://fonts.bunny.net/family/alexandria
+Color theme designed by me 

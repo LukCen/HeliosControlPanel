@@ -7,7 +7,18 @@
   --color-smoky: #f0f0f5;
 }
 @import "tailwindcss";
-
+@import url(https://fonts.bunny.net/css?family=alexandria:400,500,600,700);
+body {
+  font-family: 'Alexandria', sans-serif;
+}
 button, a {
   cursor: pointer
+}
+
+menu.main-navbar {
+  -webkit-app-region: drag;
+}
+
+menu.main-navbar button {
+  -webkit-app-region: no-drag;
 }

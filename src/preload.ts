@@ -5,8 +5,8 @@ console.log('preload loaded')
 
 contextBridge.exposeInMainWorld('Main', {
   // main menu navbar - topside of main window
-  windowClose: () => ipcRenderer.send('windowClose'),
-  windowMaximize: () => ipcRenderer.send('windowMaximize'),
-  windowMinimize: () => ipcRenderer.send('windowMinimize'),
-  defaultWindowControls: (payload: string) => ipcRenderer.send('defaultWindowControls', payload)
+  defaultWindowControls: (payload: string) => ipcRenderer.send('defaultWindowControls', payload),
+
+  // schemas
+  openNewSchemaWindow: () => ipcRenderer.send('openNewSchemaWindow')
 })
