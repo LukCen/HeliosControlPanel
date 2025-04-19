@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  // src/utils-dom.ts
+  // src/utils.ts
   function generateSchemaRow(contents) {
     const { name, key, value, type, required } = contents;
     const row = document.createElement("li");
@@ -50,6 +50,5 @@
     if (schemaPreview) {
       schemaUl?.appendChild(generateSchemaRow(preview));
     }
-    window.Main.bridgeFunction();
   });
 })();

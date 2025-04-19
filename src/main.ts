@@ -1,5 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron"
 import path from 'node:path'
+import { writeToFile } from "utils-node"
+
 
 
 
@@ -56,4 +58,10 @@ ipcMain.on('openNewSchemaWindow', (e) => {
     schemaWin.setMenuBarVisibility(false)
     schemaWin.loadFile('../public/html/addSchema.html')
   }
+})
+
+ipcMain.on('bridgeFunction', () => {
+  const pathToFile = path.join(__dirname, '../schemas.json')
+  writeToFile(pathToFile, 'test')
+
 })

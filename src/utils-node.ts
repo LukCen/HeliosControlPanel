@@ -1,13 +1,12 @@
-
 //-------------------------------------------------------------------------------------------------------------------------
 import mysql2, { Connection } from 'mysql2/promise'
 import express from 'express'
 import cors from 'cors'
 import { Server } from 'http'
+import { readFileSync, statSync, writeFile } from 'fs';
 
 
-let db: Connection | null = null;
-let server: Server;
+
 /**
  * Utility function to enable and simplify starting connections with external servers
  * Uses mysql2, cors and Express.js
@@ -16,7 +15,9 @@ let server: Server;
  * @param {string} username - name of the account logged onto the host
  * @param {string} password - password to connect to the host
  * @param {string} database  - name of the SQL database to access
- */
+*/
+let db: Connection | null = null;
+let server: Server;
 
 export async function connectionStart(hostname: string, username: string, password: string, database: string): Promise<void> {
   const app = express()
@@ -51,65 +52,32 @@ export async function connectionStart(hostname: string, username: string, passwo
   }
 }
 
-//-------------------------------------------------------------------------------------------------------------------------
-export async function checkConnectionStatus(): Promise<boolean> {
-  try {
-    if (!db) throw new Error(`Error in checkConnectionStatus - db is null or undefined`)
-    await db?.ping()
-    console.log(`checking connections...`)
-    return true
-  } catch (e) {
-    console.error(`Connection status error : ${e}`)
-    return false
-  }
-}
 
-export async function closeConnection(): Promise<void> {
-  if (db) {
-    await db.end()
-    console.log(`Connection closed successfully`)
-  }
-}
 
-// Predefined color object
-const colors: Record<string, number> = {
-  red: 9,
-  green: 10,
-  blue: 12,
-  yellow: 11,
-  magenta: 13,
-  cyan: 14,
-  white: 15,
-  black: 0,
-  grey: 234, // dark grey
-  mint: 49,  // mint green
-};
 
-/**
- * Quick and dirty way to color your terminal console logs.
- * Works in the bash terminal, should work in the browser console as well.
- * @param {string} text - contents of your message
- * @param {string} colorName - color your message will have, based on the following list: <br>
- * - red
- * - green
- * - blue
- * - yellow
- * - magenta
- * - cyan
- * - white
- * - black
- * - grey
- * - mint
- *
- * Can be viewed and modified inside src/utils/utils.ts
- */
-export function colorLog(text: string, colorName: string) {
-  const colorCode = colors[colorName];
-  if (colorCode !== undefined) {
-    const color = `\x1b[38;5;${colorCode}m`;
-    const reset = '\x1b[0m';
-    console.log(`${color}${text}${reset}`);
+// -------------------------------------------------------------------------------------------------------------------------
+export function writeToFile(filePath: string, contents: JSON | string) {
+  const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
+  const currentFile: Buffer<ArrayBufferLike> = readFileSync(filePath) // content obecnego pliku - argument kodowania zmienia return value na string
+
+  const jsonNewFile = [] // arrayka nowymi treściami w formacie JSON (stary + nowy content)
+  if (currentFileSize === 0) {
+    jsonNewFile.push(contents) // jesli plik jest pusty - dodaj tylko nową zawartość
   } else {
-    console.log('Color not found!');
+
+    jsonNewFile.push(...JSON.parse(currentFile.toString()), contents) // jeśli plik nie jest pusty - dodaj obecną zawartość + nową na koniec pliku
   }
+  const contentToSave = JSON.stringify(jsonNewFile, null, 2)
+
+  // funkcja dodająca content do pliku -
+  // @filepath - sciezka do pliku, podawana w main.js,
+  // @contentToSave - nowa zawartosc, definiowana powyzej
+  writeFile(filePath, contentToSave, { mode: 0o644 }, e => {
+    if (e) {
+      console.error(e)
+    } else {
+      console.log('Zapis pliku powiodl sie.')
+    }
+  })
+
 }

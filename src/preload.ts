@@ -8,5 +8,13 @@ contextBridge.exposeInMainWorld('Main', {
   defaultWindowControls: (payload: string) => ipcRenderer.send('defaultWindowControls', payload),
 
   // schemas
-  openNewSchemaWindow: () => ipcRenderer.send('openNewSchemaWindow')
+  openNewSchemaWindow: () => ipcRenderer.send('openNewSchemaWindow'),
+
+  /**
+   * ESBuild specific workaround - lets you run node-specific functions in a file tagged for broswer environment
+   * @param func Function to execute
+   * @param args Additional arguments
+   * @returns 
+   */
+  bridgeFunction: () => ipcRenderer.send('bridgeFunction')
 })
