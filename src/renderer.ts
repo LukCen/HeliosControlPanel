@@ -55,13 +55,9 @@ btnCreateNewRow?.addEventListener('click', () => {
     if (!rowAsObject[newRowName]) {
       rowAsObject[newRowName] = []
     }
-
     (rowAsObject[newRowName] as unknown as Array<Schema>).push(newRowValue)
   }
-
 })
-
-
 
 btnCreateNewSchema?.addEventListener('click', () => {
   // window.Main.bridgeFunction({ rowAsObject: rowAsObject as unknown as JSON })

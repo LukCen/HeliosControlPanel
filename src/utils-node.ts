@@ -87,7 +87,7 @@ export function writeToFile(filePath: string, contents: object | string) {
 // -------------------------------------------------------------------------------------------------------------------------
 export function writeToFileNew(filePath: string, contents: object | string) {
   const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
-  const currentFile: Buffer<ArrayBufferLike> = readFileSync(filePath) // content obecnego pliku - argument kodowania zmienia return value na string
+  const currentFile: string = readFileSync(filePath, 'utf-8') // content obecnego pliku - argument kodowania zmienia return value na string
 
   const jsonNewFile = [] // arrayka nowymi treściami w formacie JSON (stary + nowy content)
   if (currentFileSize === 0) {

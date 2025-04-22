@@ -1,8 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron"
-import { readFile } from "node:fs"
 import path from 'node:path'
-import { colorLog } from "utils-dom"
-import { readFromFile, writeToFile } from "utils-node"
+import { readFromFile, writeToFile, writeToFileNew } from "utils-node"
 
 
 
@@ -26,8 +24,8 @@ const test = readFromFile(path.join(__dirname, '../schemas.json'))
 app.whenReady().then(() => {
   createWindow()
   if (test) {
-    const arr = [...test]
-    arr.forEach((e) => console.log(e))
+    const insideFile = (test as Array<any>) /// yes this is bad but i dont care that much for now
+    console.log(insideFile)
   }
 })
 
@@ -70,6 +68,5 @@ ipcMain.on('openNewSchemaWindow', (e) => {
 
 ipcMain.on('bridgeFunction', (e, content) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
-  writeToFile(pathToFile, content)
-
+  writeToFileNew(pathToFile, content)
 })

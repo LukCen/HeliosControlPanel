@@ -39372,9 +39372,9 @@ var import_express = __toESM(require_express2());
 var import_cors = __toESM(require_lib5());
 var import_fs = require("fs");
 var import_promises = require("fs/promises");
-function writeToFile(filePath, contents) {
+function writeToFileNew(filePath, contents) {
   const currentFileSize = (0, import_fs.statSync)(filePath).size;
-  const currentFile = (0, import_fs.readFileSync)(filePath);
+  const currentFile = (0, import_fs.readFileSync)(filePath, "utf-8");
   const jsonNewFile = [];
   if (currentFileSize === 0) {
     jsonNewFile.push(contents);
@@ -39425,8 +39425,8 @@ var test = readFromFile(import_node_path.default.join(__dirname, "../schemas.jso
 import_electron.app.whenReady().then(() => {
   createWindow();
   if (test) {
-    const arr = [...test];
-    arr.forEach((e) => console.log(e));
+    const insideFile = test;
+    console.log(insideFile);
   }
 });
 import_electron.ipcMain.on("defaultWindowControls", (e, payload) => {
@@ -39466,7 +39466,7 @@ import_electron.ipcMain.on("openNewSchemaWindow", (e) => {
 });
 import_electron.ipcMain.on("bridgeFunction", (e, content) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
-  writeToFile(pathToFile, content);
+  writeToFileNew(pathToFile, content);
 });
 /*! Bundled license information:
 
