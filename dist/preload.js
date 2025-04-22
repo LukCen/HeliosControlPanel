@@ -14,5 +14,5 @@ import_electron.contextBridge.exposeInMainWorld("Main", {
    * @param args Additional arguments
    * @returns 
    */
-  bridgeFunction: () => import_electron.ipcRenderer.send("bridgeFunction")
+  bridgeFunction: (contentToWrite) => import_electron.ipcRenderer.send("bridgeFunction", contentToWrite)
 });

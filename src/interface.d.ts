@@ -10,7 +10,7 @@ export interface Main {
    *  Opens a window for creating new schemas
    */
   openNewSchemaWindow: () => void
-  bridgeFunction: () => void
+  bridgeFunction: (contentToWrite: unknown) => void
 }
 
 /**
@@ -18,7 +18,7 @@ export interface Main {
  * Key-value pairs are added via a local function called 'generateSchemaRow'
  */
 export interface Schema {
-  name: string,
+  name?: string,
   key: string,
   value: string | number | string[] | number[] | null
   type: string,

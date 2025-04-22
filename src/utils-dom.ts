@@ -46,8 +46,8 @@ export function colorLog(text: string, colorName: string) {
 }
 //-------------------------------------------------------------------------------------------------------------------------
 export function generateSchemaRow(contents: Schema) {
-  const { name, key, value, type, required } = contents
-
+  const { key, value, type, required } = contents
+  console.dir(contents, { depth: null })
   const row: HTMLLIElement | null = document.createElement('li')
   row.classList.add('flex', 'w-full', 'gap-1', 'even:bg-plum', 'odd:bg-violet')
 
@@ -56,10 +56,8 @@ export function generateSchemaRow(contents: Schema) {
     dataBlock.classList.add('flex', 'justify-center', 'items-center', 'px-2', 'py-1')
     dataBlock.innerText = Object.values(contents)[i]
     row.appendChild(dataBlock)
-    // console.log(dataBlock)
-    console.log(Object.values(contents))
+
   }
-  // console.log(row)
   return row
 }
 

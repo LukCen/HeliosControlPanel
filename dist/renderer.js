@@ -2,7 +2,8 @@
 (() => {
   // src/utils-dom.ts
   function generateSchemaRow(contents) {
-    const { name, key, value, type, required } = contents;
+    const { key, value, type, required } = contents;
+    console.dir(contents, { depth: null });
     const row = document.createElement("li");
     row.classList.add("flex", "w-full", "gap-1", "even:bg-plum", "odd:bg-violet");
     for (let i = 0; i < Object.keys(contents).length; i++) {
@@ -10,7 +11,6 @@
       dataBlock.classList.add("flex", "justify-center", "items-center", "px-2", "py-1");
       dataBlock.innerText = Object.values(contents)[i];
       row.appendChild(dataBlock);
-      console.log(Object.values(contents));
     }
     return row;
   }
@@ -39,6 +39,7 @@
   var btnCreateNewRow = document.querySelector("button#add-new-row");
   var btnCreateNewSchema = document.querySelector("button#add-new-schema");
   var schemaUl = document.querySelector("ul");
+  var rowAsObject = {};
   btnCreateNewRow?.addEventListener("click", () => {
     const preview = {
       name: schemaName?.value || "",
@@ -49,7 +50,17 @@
     };
     if (schemaPreview) {
       schemaUl?.appendChild(generateSchemaRow(preview));
+      const newRowName = preview.name;
+      const newRowValue = { ...preview };
+      delete newRowValue.name;
+      if (!rowAsObject[newRowName]) {
+        rowAsObject[newRowName] = [];
+      }
+      rowAsObject[newRowName].push(newRowValue);
     }
-    window.Main.bridgeFunction();
+  });
+  btnCreateNewSchema?.addEventListener("click", () => {
+    window.Main.bridgeFunction(rowAsObject);
+    return;
   });
 })();

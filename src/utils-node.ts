@@ -3,7 +3,8 @@ import mysql2, { Connection } from 'mysql2/promise'
 import express from 'express'
 import cors from 'cors'
 import { Server } from 'http'
-import { readFileSync, statSync, writeFile } from 'fs';
+import { accessSync, existsSync, PathLike, readFileSync, statSync, writeFile } from 'fs';
+import { constants } from 'fs/promises';
 
 
 
@@ -56,7 +57,7 @@ export async function connectionStart(hostname: string, username: string, passwo
 
 
 // -------------------------------------------------------------------------------------------------------------------------
-export function writeToFile(filePath: string, contents: JSON | string) {
+export function writeToFile(filePath: string, contents: object | string) {
   const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
   const currentFile: Buffer<ArrayBufferLike> = readFileSync(filePath) // content obecnego pliku - argument kodowania zmienia return value na string
 
@@ -80,4 +81,57 @@ export function writeToFile(filePath: string, contents: JSON | string) {
     }
   })
 
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------
+export function writeToFileNew(filePath: string, contents: object | string) {
+  const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
+  const currentFile: Buffer<ArrayBufferLike> = readFileSync(filePath) // content obecnego pliku - argument kodowania zmienia return value na string
+
+  const jsonNewFile = [] // arrayka nowymi treściami w formacie JSON (stary + nowy content)
+  if (currentFileSize === 0) {
+    jsonNewFile.push(contents) // jesli plik jest pusty - dodaj tylko nową zawartość
+  } else {
+
+    jsonNewFile.push(...JSON.parse(currentFile.toString()), contents) // jeśli plik nie jest pusty - dodaj obecną zawartość + nową na koniec pliku
+  }
+  const contentToSave = JSON.stringify(jsonNewFile, null, 2)
+
+  // funkcja dodająca content do pliku -
+  // @filepath - sciezka do pliku, podawana w main.js,
+  // @contentToSave - nowa zawartosc, definiowana powyzej
+  writeFile(filePath, contentToSave, { mode: 0o644 }, e => {
+    if (e) {
+      console.error(e)
+    } else {
+      console.log('Zapis pliku powiodl sie.')
+    }
+  })
+
+}
+
+// -------------------------------------------------------------------------------------------------------------------------
+/**
+ * Helper function to read contents from JS file and return the parsed contents
+ * @param file - Path to the read file
+ * @returns 
+ */
+export function readFromFile(file: PathLike): string[] | string | null {
+  try {
+    accessSync(file, constants.R_OK)
+    console.log(`file accessible`)
+    if (!existsSync(file)) return null // zabezpieczenie przez próbą zwrócenia pustego pliku
+
+    const currentFileSize = statSync(file).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
+    if (currentFileSize === 0) return null
+
+    const currentFile = readFileSync(file, "utf-8").trim() // obecne treści z pliku - nowe zostaną do nich dodane, jeśli plik nie jest pusty
+
+    return JSON.parse(currentFile)
+
+  } catch (e) {
+    console.log('file unreadable')
+    throw new Error(`Błąd ładowania pliku konfiguracyjnego : ${e}`)
+  }
 }

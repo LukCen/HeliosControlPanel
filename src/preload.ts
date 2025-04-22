@@ -16,5 +16,5 @@ contextBridge.exposeInMainWorld('Main', {
    * @param args Additional arguments
    * @returns 
    */
-  bridgeFunction: () => ipcRenderer.send('bridgeFunction')
+  bridgeFunction: (contentToWrite: unknown) => ipcRenderer.send('bridgeFunction', contentToWrite)
 })

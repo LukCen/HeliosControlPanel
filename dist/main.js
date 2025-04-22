@@ -17876,11 +17876,11 @@ var require_connection = __commonJS({
         this.addCommand = this._addCommandClosedState;
       }
       createBinlogStream(opts) {
-        let test = 1;
+        let test2 = 1;
         const stream = new Readable({ objectMode: true });
         stream._read = function() {
           return {
-            data: test++
+            data: test2++
           };
         };
         this._registerSlave(opts, () => {
@@ -30892,7 +30892,7 @@ var require_media_typer = __commonJS({
     var TYPE_REGEXP = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}) *$/;
     exports2.format = format;
     exports2.parse = parse;
-    exports2.test = test;
+    exports2.test = test2;
     function format(obj) {
       if (!obj || typeof obj !== "object") {
         throw new TypeError("argument obj is required");
@@ -30915,7 +30915,7 @@ var require_media_typer = __commonJS({
       }
       return string;
     }
-    function test(string) {
+    function test2(string) {
       if (!string) {
         throw new TypeError("argument string is required");
       }
@@ -39371,6 +39371,7 @@ var import_promise = __toESM(require_promise());
 var import_express = __toESM(require_express2());
 var import_cors = __toESM(require_lib5());
 var import_fs = require("fs");
+var import_promises = require("fs/promises");
 function writeToFile(filePath, contents) {
   const currentFileSize = (0, import_fs.statSync)(filePath).size;
   const currentFile = (0, import_fs.readFileSync)(filePath);
@@ -39389,6 +39390,20 @@ function writeToFile(filePath, contents) {
     }
   });
 }
+function readFromFile(file) {
+  try {
+    (0, import_fs.accessSync)(file, import_promises.constants.R_OK);
+    console.log(`file accessible`);
+    if (!(0, import_fs.existsSync)(file)) return null;
+    const currentFileSize = (0, import_fs.statSync)(file).size;
+    if (currentFileSize === 0) return null;
+    const currentFile = (0, import_fs.readFileSync)(file, "utf-8").trim();
+    return JSON.parse(currentFile);
+  } catch (e) {
+    console.log("file unreadable");
+    throw new Error(`B\u0142\u0105d \u0142adowania pliku konfiguracyjnego : ${e}`);
+  }
+}
 
 // src/main.ts
 var createWindow = () => {
@@ -39406,8 +39421,13 @@ var createWindow = () => {
   win.setMenuBarVisibility(false);
   win.loadFile("../public/html/main.html");
 };
+var test = readFromFile(import_node_path.default.join(__dirname, "../schemas.json"));
 import_electron.app.whenReady().then(() => {
   createWindow();
+  if (test) {
+    const arr = [...test];
+    arr.forEach((e) => console.log(e));
+  }
 });
 import_electron.ipcMain.on("defaultWindowControls", (e, payload) => {
   const win = import_electron.BrowserWindow.fromWebContents(e.sender);
@@ -39444,9 +39464,9 @@ import_electron.ipcMain.on("openNewSchemaWindow", (e) => {
     schemaWin.loadFile("../public/html/addSchema.html");
   }
 });
-import_electron.ipcMain.on("bridgeFunction", () => {
+import_electron.ipcMain.on("bridgeFunction", (e, content) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
-  writeToFile(pathToFile, "test");
+  writeToFile(pathToFile, content);
 });
 /*! Bundled license information:
 

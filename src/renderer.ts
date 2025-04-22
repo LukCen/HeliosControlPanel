@@ -33,6 +33,8 @@ const btnCreateNewRow: HTMLButtonElement | null = document.querySelector('button
 const btnCreateNewSchema: HTMLButtonElement | null = document.querySelector('button#add-new-schema')
 const schemaUl: HTMLUListElement | null = document.querySelector('ul')
 
+// testing
+const rowAsObject: Record<string, Array<string | unknown[]>> = {}
 btnCreateNewRow?.addEventListener('click', () => {
   const preview: Schema = {
     name: schemaName?.value || '',
@@ -42,8 +44,27 @@ btnCreateNewRow?.addEventListener('click', () => {
     required: schemaRequired?.checked || false
   }
 
+
   if (schemaPreview) {
     schemaUl?.appendChild(generateSchemaRow(preview))
+
+    const newRowName: string = preview.name as string
+    const newRowValue = { ...preview }
+    delete newRowValue.name // clean up 'name' from row content
+
+    if (!rowAsObject[newRowName]) {
+      rowAsObject[newRowName] = []
+    }
+
+    (rowAsObject[newRowName] as unknown as Array<Schema>).push(newRowValue)
   }
-  window.Main.bridgeFunction()
+
+})
+
+
+
+btnCreateNewSchema?.addEventListener('click', () => {
+  // window.Main.bridgeFunction({ rowAsObject: rowAsObject as unknown as JSON })
+  window.Main.bridgeFunction(rowAsObject)
+  return
 })
