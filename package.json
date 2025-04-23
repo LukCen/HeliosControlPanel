@@ -1,6 +1,6 @@
 {
   "name": "helios_v3",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A connection manager for personal use.",
   "main": "dist/main.js",
   "scripts": {
