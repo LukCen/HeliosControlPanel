@@ -66,6 +66,25 @@ ipcMain.on('openNewSchemaWindow', (e) => {
   }
 })
 
+// add connection
+ipcMain.on('openAddConnectionWindow', (e) => {
+  const mainWin = BrowserWindow.fromWebContents(e.sender)
+  if (mainWin) {
+    const addConnectionWin = new BrowserWindow({
+      width: 1200,
+      height: 400,
+      frame: false, // hides the default title bar and controls
+      titleBarStyle: 'hidden', // for macOS, apparently
+      webPreferences: {
+        preload: path.join(__dirname, './preload.js'),
+      },
+      parent: mainWin
+    })
+    addConnectionWin.setMenuBarVisibility(false)
+    addConnectionWin.loadFile('../public/html/addConnection.html')
+  }
+})
+
 ipcMain.on('bridgeFunction', (e, content) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
   writeToFileNew(pathToFile, content)

@@ -64,3 +64,12 @@ btnCreateNewSchema?.addEventListener('click', () => {
   window.Main.bridgeFunction(rowAsObject)
   return
 })
+
+// connection list
+const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('button#btn-add-connection')
+
+
+
+btnAddNewConnection?.addEventListener('click', () => {
+  window.Main.openAddConnectionWindow()
+})

@@ -39464,6 +39464,25 @@ import_electron.ipcMain.on("openNewSchemaWindow", (e) => {
     schemaWin.loadFile("../public/html/addSchema.html");
   }
 });
+import_electron.ipcMain.on("openAddConnectionWindow", (e) => {
+  const mainWin = import_electron.BrowserWindow.fromWebContents(e.sender);
+  if (mainWin) {
+    const addConnectionWin = new import_electron.BrowserWindow({
+      width: 1200,
+      height: 400,
+      frame: false,
+      // hides the default title bar and controls
+      titleBarStyle: "hidden",
+      // for macOS, apparently
+      webPreferences: {
+        preload: import_node_path.default.join(__dirname, "./preload.js")
+      },
+      parent: mainWin
+    });
+    addConnectionWin.setMenuBarVisibility(false);
+    addConnectionWin.loadFile("../public/html/addConnection.html");
+  }
+});
 import_electron.ipcMain.on("bridgeFunction", (e, content) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
   writeToFileNew(pathToFile, content);

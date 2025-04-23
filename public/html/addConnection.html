@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/output.css">
+  <title>Add connection</title>
+</head>
+
+<body class="text-smoky h-screen w-screen flex flex-col">
+  <menu class="main-navbar flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
+    <div class="flex items-center w-full gap-3">
+      <img src="../assets/icon-connection-list.webp" alt="">
+      <span>Add connection</span>
+    </div>
+    <div class="flex">
+      <button title="Close window"
+        class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150"><img
+          src="../assets/icon-close.webp" alt=""></button>
+    </div>
+  </menu>
+  <main class="h-full w-full bg-night-sky flex flex-col items-center">
+    <!-- top bar -->
+    <form class="w-3/4 grid gap-4 grid-cols-[4fr_2fr_4fr_2fr] px-4 py-2">
+      <!-- name -->
+      <div class="flex flex-col border-1 border-night-sky gap-2">
+        <label class="text-center" for="connection-name">Name</label>
+        <input class="border-2 border-smoky rounded-xl bg-violet" id="connection-name" type="text">
+      </div>
+      <!-- schema - dropdown -->
+      <div class="flex flex-col border-1 border-night-sky gap-2">
+        <label class="text-center" for="connection-schema">Schema</label>
+        <select class="h-full border-2 border-smoky rounded-xl bg-violet" name="Select schema"
+          id="connection-schema"></select>
+      </div>
+      <!-- tags -->
+      <div class="flex flex-col border-1 border-night-sky gap-2">
+        <label class="text-center" for="connection-tags">Tags</label>
+        <input class="border-2 border-smoky rounded-xl bg-violet" id="connection-tags" type="text">
+      </div>
+      <!-- autoconnect -->
+      <div class="flex flex-col border-1 items-center border-night-sky gap-2">
+        <label class="text-center" for="">Autoconnect</label>
+        <input type="checkbox" class="w-[25px] h-[25px] border-2 border-smoky rounded-xl bg-violet cursor-pointer"
+          id="connection-autoconnect" type="text">
+      </div>
+    </form>
+    <button type="button" id="btn-push-connection"
+      class="bg-violet py-1 px-2 flex items-center justify-center min-w-[150px] rounded-md border border-violet hover:border-smoky transition-colors duration-150">Add
+      new connection</button>
+  </main>
+  <script src="../../dist/renderer.js"></script>
+</body>
+
+</html>

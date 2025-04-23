@@ -63,4 +63,8 @@
     window.Main.bridgeFunction(rowAsObject);
     return;
   });
+  var btnAddNewConnection = document.querySelector("button#btn-add-connection");
+  btnAddNewConnection?.addEventListener("click", () => {
+    window.Main.openAddConnectionWindow();
+  });
 })();
