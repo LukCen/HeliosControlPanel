@@ -16,5 +16,9 @@ import_electron.contextBridge.exposeInMainWorld("Main", {
    */
   bridgeFunction: (contentToWrite) => import_electron.ipcRenderer.send("bridgeFunction", contentToWrite),
   // add connections
-  openAddConnectionWindow: () => import_electron.ipcRenderer.send("openAddConnectionWindow")
+  openAddConnectionWindow: () => import_electron.ipcRenderer.send("openAddConnectionWindow"),
+  fetchSchemaList: () => import_electron.ipcRenderer.send("fetchSchemaList"),
+  // returns the contents of schemas.json if not empty
+  pushConnection: (content) => import_electron.ipcRenderer.send("pushConnection", content)
+  //adds a new connection to the connection list
 });

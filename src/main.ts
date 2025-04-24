@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron"
 import path from 'node:path'
+import { colorLog } from "utils-dom"
 import { readFromFile, writeToFile, writeToFileNew } from "utils-node"
 
 
@@ -88,4 +89,10 @@ ipcMain.on('openAddConnectionWindow', (e) => {
 ipcMain.on('bridgeFunction', (e, content) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
   writeToFileNew(pathToFile, content)
+})
+
+ipcMain.on('fetchSchemaList', (e) => {
+  const pathToFile = path.join(__dirname, '../schemas.json')
+  colorLog('schemas.json contents below', 'cyan')
+  console.dir(readFromFile(pathToFile), { depth: null })
 })

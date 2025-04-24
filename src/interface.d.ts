@@ -10,8 +10,10 @@ export interface Main {
    *  Opens a window for creating new schemas
    */
   openNewSchemaWindow: () => void
-  bridgeFunction: (contentToWrite: unknown) => void,
-  openAddConnectionWindow: () => void
+  bridgeFunction: (contentToWrite: unknown) => void, // func for writing to schema file - rename later
+  openAddConnectionWindow: () => void,
+  fetchSchemaList: () => void
+  pushConnection: (content: object | string) => object | string
 }
 
 /**

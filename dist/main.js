@@ -39366,6 +39366,32 @@ var require_lib5 = __commonJS({
 var import_electron = require("electron");
 var import_node_path = __toESM(require("node:path"));
 
+// src/utils-dom.ts
+var colors = {
+  red: 9,
+  green: 10,
+  blue: 12,
+  yellow: 11,
+  magenta: 13,
+  cyan: 14,
+  white: 15,
+  black: 0,
+  grey: 234,
+  // dark grey
+  mint: 49
+  // mint green
+};
+function colorLog(text, colorName) {
+  const colorCode = colors[colorName];
+  if (colorCode !== void 0) {
+    const color = `\x1B[38;5;${colorCode}m`;
+    const reset = "\x1B[0m";
+    console.log(`${color}${text}${reset}`);
+  } else {
+    console.log("Color not found!");
+  }
+}
+
 // src/utils-node.ts
 var import_promise = __toESM(require_promise());
 var import_express = __toESM(require_express2());
@@ -39486,6 +39512,11 @@ import_electron.ipcMain.on("openAddConnectionWindow", (e) => {
 import_electron.ipcMain.on("bridgeFunction", (e, content) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
   writeToFileNew(pathToFile, content);
+});
+import_electron.ipcMain.on("fetchSchemaList", (e) => {
+  const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
+  colorLog("schemas.json contents below", "cyan");
+  console.dir(readFromFile(pathToFile), { depth: null });
 });
 /*! Bundled license information:
 

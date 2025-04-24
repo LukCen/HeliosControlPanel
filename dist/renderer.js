@@ -53,18 +53,31 @@
       const newRowName = preview.name;
       const newRowValue = { ...preview };
       delete newRowValue.name;
+      let arrWithData = rowAsObject[newRowName];
       if (!rowAsObject[newRowName]) {
         rowAsObject[newRowName] = [];
       }
-      rowAsObject[newRowName].push(newRowValue);
+      if (arrWithData.length > 0) {
+        arrWithData = [];
+      }
+      arrWithData.push(newRowValue);
     }
   });
   btnCreateNewSchema?.addEventListener("click", () => {
     window.Main.bridgeFunction(rowAsObject);
+    if (schemaUl) {
+      schemaUl.innerHTML = "";
+    }
+    rowAsObject = {};
     return;
   });
   var btnAddNewConnection = document.querySelector("button#btn-add-connection");
+  var btnPushConnection = document.querySelector("button#btn-push-connection");
   btnAddNewConnection?.addEventListener("click", () => {
     window.Main.openAddConnectionWindow();
+    window.Main.fetchSchemaList();
+  });
+  btnPushConnection?.addEventListener("click", () => {
+    return null;
   });
 })();

@@ -34,7 +34,7 @@ const btnCreateNewSchema: HTMLButtonElement | null = document.querySelector('but
 const schemaUl: HTMLUListElement | null = document.querySelector('ul')
 
 // testing
-const rowAsObject: Record<string, Array<string | unknown[]>> = {}
+let rowAsObject: Record<string, Array<string | unknown[]>> = {}
 btnCreateNewRow?.addEventListener('click', () => {
   const preview: Schema = {
     name: schemaName?.value || '',
@@ -51,25 +51,40 @@ btnCreateNewRow?.addEventListener('click', () => {
     const newRowName: string = preview.name as string
     const newRowValue = { ...preview }
     delete newRowValue.name // clean up 'name' from row content
+    let arrWithData: Schema[] = (rowAsObject[newRowName] as unknown as Array<Schema>)
 
     if (!rowAsObject[newRowName]) {
       rowAsObject[newRowName] = []
     }
-    (rowAsObject[newRowName] as unknown as Array<Schema>).push(newRowValue)
+    if (arrWithData.length > 0) {
+      arrWithData = []
+    }
+    arrWithData.push(newRowValue)
   }
+
 })
 
 btnCreateNewSchema?.addEventListener('click', () => {
   // window.Main.bridgeFunction({ rowAsObject: rowAsObject as unknown as JSON })
   window.Main.bridgeFunction(rowAsObject)
+  if (schemaUl) {
+    schemaUl.innerHTML = ''
+  }
+  rowAsObject = {}
   return
 })
 
 // connection list
-const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('button#btn-add-connection')
-
+const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('button#btn-add-connection') // opens a window to create new conn
+const btnPushConnection: HTMLButtonElement | null = document.querySelector('button#btn-push-connection') // adds a new conn to the conn list
 
 
 btnAddNewConnection?.addEventListener('click', () => {
   window.Main.openAddConnectionWindow()
+  window.Main.fetchSchemaList()
+})
+
+
+btnPushConnection?.addEventListener('click', () => {
+  return null
 })
