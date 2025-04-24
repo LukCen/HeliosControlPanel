@@ -19,5 +19,9 @@ contextBridge.exposeInMainWorld('Main', {
   // add connections
   openAddConnectionWindow: () => ipcRenderer.send('openAddConnectionWindow'),
   fetchSchemaList: () => ipcRenderer.send('fetchSchemaList'), // returns the contents of schemas.json if not empty
+
+
+  // this is the one you want
+  fetchSchemaListResponse: (callback: (data: object) => void) => ipcRenderer.on('fetchSchemaListResponse', (_, data) => callback(data)),
   pushConnection: (content: object | string) => ipcRenderer.send('pushConnection', content) //adds a new connection to the connection list
 })

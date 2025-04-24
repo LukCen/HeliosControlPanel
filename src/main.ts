@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron"
 import path from 'node:path'
 import { colorLog } from "utils-dom"
-import { readFromFile, writeToFile, writeToFileNew } from "utils-node"
+import { readFromFile, writeToFileNew } from "utils-node"
 
 
 
@@ -83,7 +83,9 @@ ipcMain.on('openAddConnectionWindow', (e) => {
     })
     addConnectionWin.setMenuBarVisibility(false)
     addConnectionWin.loadFile('../public/html/addConnection.html')
+
   }
+
 })
 
 ipcMain.on('bridgeFunction', (e, content) => {
@@ -93,6 +95,8 @@ ipcMain.on('bridgeFunction', (e, content) => {
 
 ipcMain.on('fetchSchemaList', (e) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
-  colorLog('schemas.json contents below', 'cyan')
-  console.dir(readFromFile(pathToFile), { depth: null })
+  // colorLog('schemas.json contents below', 'cyan')
+  // console.dir(readFromFile(pathToFile), { depth: null })
+  const response = readFromFile(pathToFile)
+  e.sender.send('fetchSchemaListResponse', (response))
 })

@@ -1,5 +1,8 @@
+
 import { Schema } from "./interface"
-import { generateSchemaRow } from "./utils-dom"
+import { colorLog, generateSchemaRow } from "./utils-dom"
+
+
 
 // main window nav bar menu - topside main window
 const btnClose: HTMLButtonElement | null = document.querySelector('button[title="Close window"]')
@@ -47,7 +50,6 @@ btnCreateNewRow?.addEventListener('click', () => {
 
   if (schemaPreview) {
     schemaUl?.appendChild(generateSchemaRow(preview))
-
     const newRowName: string = preview.name as string
     const newRowValue = { ...preview }
     delete newRowValue.name // clean up 'name' from row content
@@ -75,16 +77,36 @@ btnCreateNewSchema?.addEventListener('click', () => {
 })
 
 // connection list
+
 const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('button#btn-add-connection') // opens a window to create new conn
 const btnPushConnection: HTMLButtonElement | null = document.querySelector('button#btn-push-connection') // adds a new conn to the conn list
-
+const btnChooseConnectionSchema: HTMLSelectElement | null = document.querySelector('select') // schema select dropdown
+const connectionBody: HTMLElement | null = document.querySelector('body.add-connection-window')
 
 btnAddNewConnection?.addEventListener('click', () => {
+
   window.Main.openAddConnectionWindow()
+  console.log(document.body.innerHTML)
+})
+if (document.body.dataset.windowType === "add-connection") {
+  test()
+}
+function test() {
   window.Main.fetchSchemaList()
-})
+  window.Main.fetchSchemaListResponse((data: object) => {
+    (data as Array<object>).forEach((elem: object) => {
+      console.dir(Object.keys(elem)[0])
+      const option = document.createElement('option')
+      option.innerText = Object.keys(elem)[0]
+      btnChooseConnectionSchema?.appendChild(option)
+    })
+  })
+}
 
 
-btnPushConnection?.addEventListener('click', () => {
-  return null
-})
+
+// btnPushConnection?.addEventListener('click', () => {
+// })
+// window.Main.fetchSchemaList() // DELETE ME AFTER
+
+

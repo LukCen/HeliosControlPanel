@@ -73,11 +73,24 @@
   });
   var btnAddNewConnection = document.querySelector("button#btn-add-connection");
   var btnPushConnection = document.querySelector("button#btn-push-connection");
+  var btnChooseConnectionSchema = document.querySelector("select");
+  var connectionBody = document.querySelector("body.add-connection-window");
   btnAddNewConnection?.addEventListener("click", () => {
     window.Main.openAddConnectionWindow();
+    console.log(document.body.innerHTML);
+  });
+  if (document.body.dataset.windowType === "add-connection") {
+    test();
+  }
+  function test() {
     window.Main.fetchSchemaList();
-  });
-  btnPushConnection?.addEventListener("click", () => {
-    return null;
-  });
+    window.Main.fetchSchemaListResponse((data) => {
+      data.forEach((elem) => {
+        console.dir(Object.keys(elem)[0]);
+        const option = document.createElement("option");
+        option.innerText = Object.keys(elem)[0];
+        btnChooseConnectionSchema?.appendChild(option);
+      });
+    });
+  }
 })();

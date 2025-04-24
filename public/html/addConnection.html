@@ -8,7 +8,7 @@
   <title>Add connection</title>
 </head>
 
-<body class="text-smoky h-screen w-screen flex flex-col">
+<body data-window-type="add-connection" class="add-connection-window text-smoky h-screen w-screen flex flex-col">
   <menu class="main-navbar flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
     <div class="flex items-center w-full gap-3">
       <img src="../assets/icon-connection-list.webp" alt="">
@@ -22,7 +22,7 @@
   </menu>
   <main class="h-full w-full bg-night-sky flex flex-col items-center">
     <!-- top bar -->
-    <form class="w-3/4 grid gap-4 grid-cols-[4fr_2fr_4fr_2fr] px-4 py-2">
+    <form id="connectionformtest" class="w-3/4 grid gap-4 grid-cols-[4fr_2fr_4fr_2fr] px-4 py-2">
       <!-- name -->
       <div class="flex flex-col border-1 border-night-sky gap-2">
         <label class="text-center" for="connection-name">Name</label>
@@ -50,7 +50,7 @@
       class="bg-violet py-1 px-2 flex items-center justify-center min-w-[150px] rounded-md border border-violet hover:border-smoky transition-colors duration-150">Add
       new connection</button>
   </main>
-  <script src="../../dist/renderer.js"></script>
+  <script defer src="../../dist/renderer.js"></script>
 </body>
 
 </html>

@@ -12,7 +12,8 @@ export interface Main {
   openNewSchemaWindow: () => void
   bridgeFunction: (contentToWrite: unknown) => void, // func for writing to schema file - rename later
   openAddConnectionWindow: () => void,
-  fetchSchemaList: () => void
+  fetchSchemaList: () => void,
+  fetchSchemaListResponse: (response: object | string) => object | string
   pushConnection: (content: object | string) => object | string
 }
 
