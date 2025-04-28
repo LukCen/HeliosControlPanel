@@ -74,22 +74,40 @@
   var btnAddNewConnection = document.querySelector("button#btn-add-connection");
   var btnPushConnection = document.querySelector("button#btn-push-connection");
   var btnChooseConnectionSchema = document.querySelector("select");
-  var connectionBody = document.querySelector("body.add-connection-window");
+  var generatedConnectionData = document.querySelector(".generated-connection-data");
+  var dataElements = [];
+  var dataElementNames = [];
   btnAddNewConnection?.addEventListener("click", () => {
     window.Main.openAddConnectionWindow();
-    console.log(document.body.innerHTML);
   });
   if (document.body.dataset.windowType === "add-connection") {
-    test();
+    getSchemaList();
+    console.log("SCHEMA LIST IS HERE");
+    btnChooseConnectionSchema?.addEventListener("change", () => {
+      for (let i = 0; i < dataElements.length; i++) {
+        const itemWrapper = document.createElement("div");
+        itemWrapper.classList.add("flex", "flex-col", "gap-4");
+        const listItemLabel = document.createElement("label");
+        const listItem = document.createElement("input");
+        listItemLabel.setAttribute("for", dataElementNames[i]);
+        listItemLabel.textContent = dataElementNames[i];
+        listItem.id = dataElementNames[i];
+        itemWrapper.append(listItemLabel, listItem);
+        generatedConnectionData?.appendChild(itemWrapper);
+      }
+      console.log(dataElements[0]);
+      console.log(dataElementNames);
+    });
   }
-  function test() {
+  function getSchemaList() {
     window.Main.fetchSchemaList();
     window.Main.fetchSchemaListResponse((data) => {
       data.forEach((elem) => {
-        console.dir(Object.keys(elem)[0]);
         const option = document.createElement("option");
         option.innerText = Object.keys(elem)[0];
         btnChooseConnectionSchema?.appendChild(option);
+        dataElements.push(elem);
+        dataElementNames.push(Object.keys(elem)[0]);
       });
     });
   }

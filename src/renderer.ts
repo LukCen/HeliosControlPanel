@@ -81,32 +81,53 @@ btnCreateNewSchema?.addEventListener('click', () => {
 const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('button#btn-add-connection') // opens a window to create new conn
 const btnPushConnection: HTMLButtonElement | null = document.querySelector('button#btn-push-connection') // adds a new conn to the conn list
 const btnChooseConnectionSchema: HTMLSelectElement | null = document.querySelector('select') // schema select dropdown
-const connectionBody: HTMLElement | null = document.querySelector('body.add-connection-window')
+const generatedConnectionData: HTMLFormElement | null = document.querySelector('.generated-connection-data') // form generated from selected schema - based on JSON contents
 
+const dataElements: object[] = [] // individual elements received from the schema file
+const dataElementNames: string[] = []
 btnAddNewConnection?.addEventListener('click', () => {
 
   window.Main.openAddConnectionWindow()
-  console.log(document.body.innerHTML)
 })
+
 if (document.body.dataset.windowType === "add-connection") {
-  test()
-}
-function test() {
-  window.Main.fetchSchemaList()
-  window.Main.fetchSchemaListResponse((data: object) => {
-    (data as Array<object>).forEach((elem: object) => {
-      console.dir(Object.keys(elem)[0])
-      const option = document.createElement('option')
-      option.innerText = Object.keys(elem)[0]
-      btnChooseConnectionSchema?.appendChild(option)
-    })
+  getSchemaList()
+  // const selectedSchema: HTMLOptionElement | null = document.querySelector("option").selected
+  console.log("SCHEMA LIST IS HERE")
+  btnChooseConnectionSchema?.addEventListener('change', () => {
+    for (let i = 0; i < dataElements.length; i++) {
+      const itemWrapper = document.createElement('div')
+      itemWrapper.classList.add('flex', 'flex-col', 'gap-4')
+
+      const listItemLabel = document.createElement('label')
+      const listItem = document.createElement('input')
+
+      listItemLabel.setAttribute('for', dataElementNames[i])
+      listItemLabel.textContent = dataElementNames[i]
+      listItem.id = dataElementNames[i]
+      itemWrapper.append(listItemLabel, listItem)
+
+      generatedConnectionData?.appendChild(itemWrapper)
+
+    }
+    console.log(dataElements[0])
+    console.log(dataElementNames)
+
   })
 }
 
-
-
-// btnPushConnection?.addEventListener('click', () => {
-// })
-// window.Main.fetchSchemaList() // DELETE ME AFTER
+function getSchemaList() {
+  window.Main.fetchSchemaList()
+  window.Main.fetchSchemaListResponse((data: object) => {
+    (data as Array<object>).forEach((elem: object) => {
+      // console.dir(Object.keys(elem)[0])
+      const option = document.createElement('option')
+      option.innerText = Object.keys(elem)[0]
+      btnChooseConnectionSchema?.appendChild(option)
+      dataElements.push(elem)
+      dataElementNames.push(Object.keys(elem)[0])
+    })
+  })
+}
 
 
