@@ -29,6 +29,18 @@ export interface Schema {
   required: boolean
 }
 
+export type SchemaField = {
+  key: string;
+  value: string;
+  type: string;
+  required: boolean;
+}
+
+export type SchemaBlock = {
+  name: string
+  fields: SchemaField[]
+}
+
 declare global {
   interface Window {
     Main: Main

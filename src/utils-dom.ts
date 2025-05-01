@@ -1,5 +1,5 @@
 
-import { Schema } from 'interface';
+import { Schema, SchemaField } from 'interface';
 
 //-------------------------------------------------------------------------------------------------------------------------
 // Predefined color object
@@ -45,22 +45,20 @@ export function colorLog(text: string, colorName: string) {
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------
-export function generateSchemaRow(contents: Schema) {
-  const { key, value, type, required } = contents
-  console.dir(contents, { depth: null })
+
+export function generateSchemaRow(field: SchemaField) {
+
   const row: HTMLLIElement | null = document.createElement('li')
   row.classList.add('flex', 'w-full', 'gap-1', 'even:bg-plum', 'odd:bg-violet')
 
-  for (let i = 0; i < Object.keys(contents).length; i++) {
-    const dataBlock: HTMLDivElement | null = document.createElement('div')
+  Object.entries(field).forEach(([key, val]) => {
+    const dataBlock = document.createElement('div')
     dataBlock.classList.add('flex', 'justify-center', 'items-center', 'px-2', 'py-1')
-    dataBlock.innerText = Object.values(contents)[i]
+    dataBlock.innerText = `${val}`
     row.appendChild(dataBlock)
-
-  }
+  })
   return row
 }
-
 
 
 

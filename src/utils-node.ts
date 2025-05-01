@@ -5,6 +5,7 @@ import cors from 'cors'
 import { Server } from 'http'
 import { accessSync, existsSync, PathLike, readFileSync, statSync, writeFile } from 'fs';
 import { constants } from 'fs/promises';
+import { SchemaBlock } from 'interface';
 
 
 
@@ -80,35 +81,38 @@ export function writeToFile(filePath: string, contents: object | string) {
       console.log('Zapis pliku powiodl sie.')
     }
   })
-
 }
 
 
 // -------------------------------------------------------------------------------------------------------------------------
-export function writeToFileNew(filePath: string, contents: object | string) {
-  const currentFileSize = statSync(filePath).size // rozmiar obecnego pliku liczony w bitach - przy wyniku rownym 0 nie dodaje zawartosci do nowego pliku
-  const currentFile: string = readFileSync(filePath, 'utf-8') // content obecnego pliku - argument kodowania zmienia return value na string
+export function writeToFileNew(filePath: string, newSchemas: SchemaBlock[]) {
 
-  const jsonNewFile = [] // arrayka nowymi treściami w formacie JSON (stary + nowy content)
-  if (currentFileSize === 0) {
-    jsonNewFile.push(contents) // jesli plik jest pusty - dodaj tylko nową zawartość
-  } else {
+  let finalSchemas: SchemaBlock[] = []
 
-    jsonNewFile.push(...JSON.parse(currentFile.toString()), contents) // jeśli plik nie jest pusty - dodaj obecną zawartość + nową na koniec pliku
-  }
-  const contentToSave = JSON.stringify(jsonNewFile, null, 2)
+  try {
+    const currentFileSize = statSync(filePath).size
 
-  // funkcja dodająca content do pliku -
-  // @filepath - sciezka do pliku, podawana w main.js,
-  // @contentToSave - nowa zawartosc, definiowana powyzej
-  writeFile(filePath, contentToSave, { mode: 0o644 }, e => {
-    if (e) {
-      console.error(e)
+    // check file size - if larger than zero, file not empty, read existing data, parse as array of SchemaBlocks, then append new content and replace the file content with it all
+    // if file is empty, simply add the newly added schema
+    if (currentFileSize > 0) {
+      const existingData = JSON.parse(readFileSync(filePath, 'utf-8')) as SchemaBlock[]
+      finalSchemas = [...existingData, ...newSchemas]
     } else {
-      console.log('Zapis pliku powiodl sie.')
+      finalSchemas = [...newSchemas]
     }
-  })
 
+    const contentToSave = JSON.stringify(finalSchemas, null, 2)
+    writeFile(filePath, contentToSave, { mode: 0o644 }, e => {
+      if (e) {
+        console.error(e)
+      } else {
+        console.log('Zapis pliku powiodl sie.')
+      }
+    })
+  }
+  catch (e) {
+    console.error
+  }
 }
 
 // -------------------------------------------------------------------------------------------------------------------------

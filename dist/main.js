@@ -39372,23 +39372,27 @@ var import_express = __toESM(require_express2());
 var import_cors = __toESM(require_lib5());
 var import_fs = require("fs");
 var import_promises = require("fs/promises");
-function writeToFileNew(filePath, contents) {
-  const currentFileSize = (0, import_fs.statSync)(filePath).size;
-  const currentFile = (0, import_fs.readFileSync)(filePath, "utf-8");
-  const jsonNewFile = [];
-  if (currentFileSize === 0) {
-    jsonNewFile.push(contents);
-  } else {
-    jsonNewFile.push(...JSON.parse(currentFile.toString()), contents);
-  }
-  const contentToSave = JSON.stringify(jsonNewFile, null, 2);
-  (0, import_fs.writeFile)(filePath, contentToSave, { mode: 420 }, (e) => {
-    if (e) {
-      console.error(e);
+function writeToFileNew(filePath, newSchemas) {
+  let finalSchemas = [];
+  try {
+    const currentFileSize = (0, import_fs.statSync)(filePath).size;
+    if (currentFileSize > 0) {
+      const existingData = JSON.parse((0, import_fs.readFileSync)(filePath, "utf-8"));
+      finalSchemas = [...existingData, ...newSchemas];
     } else {
-      console.log("Zapis pliku powiodl sie.");
+      finalSchemas = [...newSchemas];
     }
-  });
+    const contentToSave = JSON.stringify(finalSchemas, null, 2);
+    (0, import_fs.writeFile)(filePath, contentToSave, { mode: 420 }, (e) => {
+      if (e) {
+        console.error(e);
+      } else {
+        console.log("Zapis pliku powiodl sie.");
+      }
+    });
+  } catch (e) {
+    console.error;
+  }
 }
 function readFromFile(file) {
   try {
@@ -39469,7 +39473,7 @@ import_electron.ipcMain.on("openAddConnectionWindow", (e) => {
   if (mainWin) {
     const addConnectionWin = new import_electron.BrowserWindow({
       width: 1200,
-      height: 400,
+      height: 800,
       frame: false,
       // hides the default title bar and controls
       titleBarStyle: "hidden",

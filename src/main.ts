@@ -73,7 +73,7 @@ ipcMain.on('openAddConnectionWindow', (e) => {
   if (mainWin) {
     const addConnectionWin = new BrowserWindow({
       width: 1200,
-      height: 400,
+      height: 800,
       frame: false, // hides the default title bar and controls
       titleBarStyle: 'hidden', // for macOS, apparently
       webPreferences: {

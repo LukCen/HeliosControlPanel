@@ -1,6 +1,6 @@
 
-import { Schema } from "./interface"
-import { colorLog, generateSchemaRow } from "./utils-dom"
+import { SchemaBlock, SchemaField } from "./interface"
+import { generateSchemaRow } from "./utils-dom"
 
 
 
@@ -36,44 +36,41 @@ const btnCreateNewRow: HTMLButtonElement | null = document.querySelector('button
 const btnCreateNewSchema: HTMLButtonElement | null = document.querySelector('button#add-new-schema')
 const schemaUl: HTMLUListElement | null = document.querySelector('ul')
 
-// testing
-let rowAsObject: Record<string, Array<string | unknown[]>> = {}
+// new schema creation logic
+let schemas: SchemaBlock[] = []
+let tempFields: SchemaField[] = []
+
 btnCreateNewRow?.addEventListener('click', () => {
-  const preview: Schema = {
-    name: schemaName?.value || '',
+  const newField: SchemaField = {
     key: schemaKey?.value || '',
     value: schemaValue?.value || '',
     type: schemaType?.value || '',
     required: schemaRequired?.checked || false
   }
-
-
-  if (schemaPreview) {
-    schemaUl?.appendChild(generateSchemaRow(preview))
-    const newRowName: string = preview.name as string
-    const newRowValue = { ...preview }
-    delete newRowValue.name // clean up 'name' from row content
-    let arrWithData: Schema[] = (rowAsObject[newRowName] as unknown as Array<Schema>)
-
-    if (!rowAsObject[newRowName]) {
-      rowAsObject[newRowName] = []
-    }
-    if (arrWithData.length > 0) {
-      arrWithData = []
-    }
-    arrWithData.push(newRowValue)
+  tempFields.push(newField)
+  if (schemaUl) {
+    schemaUl.appendChild(generateSchemaRow(newField))
   }
-
 })
 
 btnCreateNewSchema?.addEventListener('click', () => {
-  // window.Main.bridgeFunction({ rowAsObject: rowAsObject as unknown as JSON })
-  window.Main.bridgeFunction(rowAsObject)
+
+  const newSchema: SchemaBlock = {
+    name: schemaName?.value || `Unnamed schema ${schemas.length + 1}`,
+    fields: tempFields
+  }
+  schemas.push(newSchema)
+  window.Main.bridgeFunction(schemas)
+
+  // reset to prevent data doubling
+  schemas = []
+  tempFields = []
   if (schemaUl) {
     schemaUl.innerHTML = ''
   }
-  rowAsObject = {}
-  return
+  if (schemaPreview) {
+    schemaPreview.innerText = JSON.stringify(schemas, null, 2)
+  }
 })
 
 // connection list
@@ -85,6 +82,8 @@ const generatedConnectionData: HTMLFormElement | null = document.querySelector('
 
 const dataElements: object[] = [] // individual elements received from the schema file
 const dataElementNames: string[] = []
+
+
 btnAddNewConnection?.addEventListener('click', () => {
 
   window.Main.openAddConnectionWindow()
@@ -95,23 +94,31 @@ if (document.body.dataset.windowType === "add-connection") {
   // const selectedSchema: HTMLOptionElement | null = document.querySelector("option").selected
   console.log("SCHEMA LIST IS HERE")
   btnChooseConnectionSchema?.addEventListener('change', () => {
+    const currentDataElementValues = Object.values(dataElements[0])[0][0] // i hate this so fucking much but this may do for now
+    // remove contents if has anything - anti-duplication measure
+    if (generatedConnectionData?.hasChildNodes) {
+      generatedConnectionData.innerHTML = ""
+    }
+
     for (let i = 0; i < dataElements.length; i++) {
       const itemWrapper = document.createElement('div')
       itemWrapper.classList.add('flex', 'flex-col', 'gap-4')
 
       const listItemLabel = document.createElement('label')
       const listItem = document.createElement('input')
+      listItem.classList.add('border', 'border-smoky', 'rounded-md')
 
       listItemLabel.setAttribute('for', dataElementNames[i])
-      listItemLabel.textContent = dataElementNames[i]
+      listItemLabel.textContent = Object.values(currentDataElementValues)[i] as unknown as string
       listItem.id = dataElementNames[i]
       itemWrapper.append(listItemLabel, listItem)
 
       generatedConnectionData?.appendChild(itemWrapper)
 
     }
-    console.log(dataElements[0])
-    console.log(dataElementNames)
+    console.log(Object.keys(currentDataElementValues))
+    console.log(Object.values(currentDataElementValues)[0])
+    // console.log(dataElementNames)
 
   })
 }
