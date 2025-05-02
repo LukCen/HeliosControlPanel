@@ -1,0 +1,123 @@
+[
+  {
+    "name": "schema_users",
+    "fields": [
+      {
+        "key": "username",
+        "value": "johndoe",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "email",
+        "value": "john@example.com",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "active",
+        "value": "true",
+        "type": "boolean",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "schema_products",
+    "fields": [
+      {
+        "key": "product_id",
+        "value": "A123",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "name",
+        "value": "Widget",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "price",
+        "value": "19.99",
+        "type": "number",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "schema_orders",
+    "fields": [
+      {
+        "key": "order_id",
+        "value": "ORD001",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "user_id",
+        "value": "johndoe",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "total",
+        "value": "29.99",
+        "type": "number",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "schema_sessions",
+    "fields": [
+      {
+        "key": "session_id",
+        "value": "SESS001",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "user_id",
+        "value": "johndoe",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "timestamp",
+        "value": "2025-05-02T12:00:00Z",
+        "type": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "schema_logs",
+    "fields": [
+      {
+        "key": "log_id",
+        "value": "LOG001",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "level",
+        "value": "info",
+        "type": "string",
+        "required": false
+      },
+      {
+        "key": "message",
+        "value": "User logged in",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "timestamp",
+        "value": "2025-05-02T12:00:01Z",
+        "type": "string",
+        "required": true
+      }
+    ]
+  }
+]

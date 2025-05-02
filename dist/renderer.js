@@ -72,7 +72,6 @@
   var btnChooseConnectionSchema = document.querySelector("select");
   var generatedConnectionData = document.querySelector(".generated-connection-data");
   var dataElements = [];
-  var dataElementNames = [];
   btnAddNewConnection?.addEventListener("click", () => {
     window.Main.openAddConnectionWindow();
   });
@@ -80,35 +79,36 @@
     getSchemaList();
     console.log("SCHEMA LIST IS HERE");
     btnChooseConnectionSchema?.addEventListener("change", () => {
-      const currentDataElementValues = Object.values(dataElements[0])[0][0];
+      const currentlySelectedSchemaName = btnChooseConnectionSchema.value;
+      const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null;
       if (generatedConnectionData?.hasChildNodes) {
         generatedConnectionData.innerHTML = "";
       }
       for (let i = 0; i < dataElements.length; i++) {
-        const itemWrapper = document.createElement("div");
-        itemWrapper.classList.add("flex", "flex-col", "gap-4");
-        const listItemLabel = document.createElement("label");
-        const listItem = document.createElement("input");
-        listItem.classList.add("border", "border-smoky", "rounded-md");
-        listItemLabel.setAttribute("for", dataElementNames[i]);
-        listItemLabel.textContent = Object.values(currentDataElementValues)[i];
-        listItem.id = dataElementNames[i];
-        itemWrapper.append(listItemLabel, listItem);
-        generatedConnectionData?.appendChild(itemWrapper);
+        const schemaFormBlock = document.createElement("div");
+        schemaFormBlock.classList.add("flex", "flex-col");
+        const schemaFormLabel = document.createElement("label");
+        schemaFormLabel.setAttribute("for", dataElements[i].name);
+        schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].key;
+        const schemaFormInput = document.createElement("input");
+        schemaFormInput.classList.add("text-smoky", "border-2", "rounded-md", "px-4", "py-2");
+        schemaFormInput.id = dataElements[i].name;
+        schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value;
+        schemaFormBlock.append(schemaFormLabel, schemaFormInput);
+        generatedConnectionData?.appendChild(schemaFormBlock);
       }
-      console.log(Object.keys(currentDataElementValues));
-      console.log(Object.values(currentDataElementValues)[0]);
+      console.log(currentlySelectedSchemaValues?.fields[0].key);
     });
   }
   function getSchemaList() {
     window.Main.fetchSchemaList();
     window.Main.fetchSchemaListResponse((data) => {
       data.forEach((elem) => {
-        const option = document.createElement("option");
-        option.innerText = Object.keys(elem)[0];
-        btnChooseConnectionSchema?.appendChild(option);
+        const schemaItem = document.createElement("option");
+        schemaItem.classList.add("text-smoky", "px-4", "py-2");
+        schemaItem.innerText = elem.name;
+        btnChooseConnectionSchema?.appendChild(schemaItem);
         dataElements.push(elem);
-        dataElementNames.push(Object.keys(elem)[0]);
       });
     });
   }

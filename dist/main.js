@@ -17876,11 +17876,11 @@ var require_connection = __commonJS({
         this.addCommand = this._addCommandClosedState;
       }
       createBinlogStream(opts) {
-        let test2 = 1;
+        let test = 1;
         const stream = new Readable({ objectMode: true });
         stream._read = function() {
           return {
-            data: test2++
+            data: test++
           };
         };
         this._registerSlave(opts, () => {
@@ -30892,7 +30892,7 @@ var require_media_typer = __commonJS({
     var TYPE_REGEXP = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}) *$/;
     exports2.format = format;
     exports2.parse = parse;
-    exports2.test = test2;
+    exports2.test = test;
     function format(obj) {
       if (!obj || typeof obj !== "object") {
         throw new TypeError("argument obj is required");
@@ -30915,7 +30915,7 @@ var require_media_typer = __commonJS({
       }
       return string;
     }
-    function test2(string) {
+    function test(string) {
       if (!string) {
         throw new TypeError("argument string is required");
       }
@@ -39366,6 +39366,32 @@ var require_lib5 = __commonJS({
 var import_electron = require("electron");
 var import_node_path = __toESM(require("node:path"));
 
+// src/utils-dom.ts
+var colors = {
+  red: 9,
+  green: 10,
+  blue: 12,
+  yellow: 11,
+  magenta: 13,
+  cyan: 14,
+  white: 15,
+  black: 0,
+  grey: 234,
+  // dark grey
+  mint: 49
+  // mint green
+};
+function colorLog(text, colorName) {
+  const colorCode = colors[colorName];
+  if (colorCode !== void 0) {
+    const color = `\x1B[38;5;${colorCode}m`;
+    const reset = "\x1B[0m";
+    console.log(`${color}${text}${reset}`);
+  } else {
+    console.log("Color not found!");
+  }
+}
+
 // src/utils-node.ts
 var import_promise = __toESM(require_promise());
 var import_express = __toESM(require_express2());
@@ -39425,13 +39451,8 @@ var createWindow = () => {
   win.setMenuBarVisibility(false);
   win.loadFile("../public/html/main.html");
 };
-var test = readFromFile(import_node_path.default.join(__dirname, "../schemas.json"));
 import_electron.app.whenReady().then(() => {
   createWindow();
-  if (test) {
-    const insideFile = test;
-    console.log(insideFile);
-  }
 });
 import_electron.ipcMain.on("defaultWindowControls", (e, payload) => {
   const win = import_electron.BrowserWindow.fromWebContents(e.sender);
@@ -39494,6 +39515,10 @@ import_electron.ipcMain.on("bridgeFunction", (e, content) => {
 import_electron.ipcMain.on("fetchSchemaList", (e) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
   const response = readFromFile(pathToFile);
+  colorLog("response logged in the fetchSchemaList binding", "cyan");
+  if (response) {
+    console.log(response);
+  }
   e.sender.send("fetchSchemaListResponse", response);
 });
 /*! Bundled license information:

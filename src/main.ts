@@ -20,14 +20,9 @@ const createWindow = () => {
   win.loadFile('../public/html/main.html')
 }
 
-const test = readFromFile(path.join(__dirname, '../schemas.json'))
 
 app.whenReady().then(() => {
   createWindow()
-  if (test) {
-    const insideFile = (test as Array<any>) /// yes this is bad but i dont care that much for now
-    console.log(insideFile)
-  }
 })
 
 ipcMain.on('defaultWindowControls', (e, payload) => {
@@ -98,5 +93,9 @@ ipcMain.on('fetchSchemaList', (e) => {
   // colorLog('schemas.json contents below', 'cyan')
   // console.dir(readFromFile(pathToFile), { depth: null })
   const response = readFromFile(pathToFile)
+  colorLog('response logged in the fetchSchemaList binding', 'cyan')
+  if (response) {
+    console.log(response)
+  }
   e.sender.send('fetchSchemaListResponse', (response))
 })

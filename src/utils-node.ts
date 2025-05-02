@@ -121,7 +121,7 @@ export function writeToFileNew(filePath: string, newSchemas: SchemaBlock[]) {
  * @param file - Path to the read file
  * @returns 
  */
-export function readFromFile(file: PathLike): string[] | string | null {
+export function readFromFile(file: PathLike): SchemaBlock[] | null {
   try {
     accessSync(file, constants.R_OK)
     console.log(`file accessible`)
@@ -133,7 +133,7 @@ export function readFromFile(file: PathLike): string[] | string | null {
     const currentFile = readFileSync(file, "utf-8").trim() // obecne treści z pliku - nowe zostaną do nich dodane, jeśli plik nie jest pusty
 
     return JSON.parse(currentFile)
-
+    // return 'null'
   } catch (e) {
     console.log('file unreadable')
     throw new Error(`Błąd ładowania pliku konfiguracyjnego : ${e}`)

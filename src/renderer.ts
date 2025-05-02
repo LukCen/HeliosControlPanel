@@ -80,12 +80,11 @@ const btnPushConnection: HTMLButtonElement | null = document.querySelector('butt
 const btnChooseConnectionSchema: HTMLSelectElement | null = document.querySelector('select') // schema select dropdown
 const generatedConnectionData: HTMLFormElement | null = document.querySelector('.generated-connection-data') // form generated from selected schema - based on JSON contents
 
-const dataElements: object[] = [] // individual elements received from the schema file
-const dataElementNames: string[] = []
+const dataElements: SchemaBlock[] = [] // individual elements received from the schema file
+const dataElementNames: SchemaBlock[] = []
 
 
 btnAddNewConnection?.addEventListener('click', () => {
-
   window.Main.openAddConnectionWindow()
 })
 
@@ -94,45 +93,44 @@ if (document.body.dataset.windowType === "add-connection") {
   // const selectedSchema: HTMLOptionElement | null = document.querySelector("option").selected
   console.log("SCHEMA LIST IS HERE")
   btnChooseConnectionSchema?.addEventListener('change', () => {
-    const currentDataElementValues = Object.values(dataElements[0])[0][0] // i hate this so fucking much but this may do for now
+    const currentlySelectedSchemaName = btnChooseConnectionSchema.value // currently selected schema name
+    const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null // currently selected schema object
     // remove contents if has anything - anti-duplication measure
     if (generatedConnectionData?.hasChildNodes) {
       generatedConnectionData.innerHTML = ""
     }
 
     for (let i = 0; i < dataElements.length; i++) {
-      const itemWrapper = document.createElement('div')
-      itemWrapper.classList.add('flex', 'flex-col', 'gap-4')
+      const schemaFormBlock = document.createElement('div') //box for the label/input pair
 
-      const listItemLabel = document.createElement('label')
-      const listItem = document.createElement('input')
-      listItem.classList.add('border', 'border-smoky', 'rounded-md')
 
-      listItemLabel.setAttribute('for', dataElementNames[i])
-      listItemLabel.textContent = Object.values(currentDataElementValues)[i] as unknown as string
-      listItem.id = dataElementNames[i]
-      itemWrapper.append(listItemLabel, listItem)
+      schemaFormBlock.classList.add('flex', 'flex-col')
 
-      generatedConnectionData?.appendChild(itemWrapper)
+      const schemaFormLabel = document.createElement('label')
+      schemaFormLabel.setAttribute('for', dataElements[i].name)
+      schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].key as string
+      const schemaFormInput = document.createElement('input')
+      schemaFormInput.classList.add('text-smoky', 'border-2', 'rounded-md', 'px-4', 'py-2')
+      schemaFormInput.id = dataElements[i].name
+      schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value as string
 
+      schemaFormBlock.append(schemaFormLabel, schemaFormInput)
+
+      generatedConnectionData?.appendChild(schemaFormBlock)
     }
-    console.log(Object.keys(currentDataElementValues))
-    console.log(Object.values(currentDataElementValues)[0])
-    // console.log(dataElementNames)
-
+    console.log(currentlySelectedSchemaValues?.fields[0].key)
   })
 }
 
 function getSchemaList() {
   window.Main.fetchSchemaList()
   window.Main.fetchSchemaListResponse((data: object) => {
-    (data as Array<object>).forEach((elem: object) => {
-      // console.dir(Object.keys(elem)[0])
-      const option = document.createElement('option')
-      option.innerText = Object.keys(elem)[0]
-      btnChooseConnectionSchema?.appendChild(option)
+    (data as SchemaBlock[]).forEach((elem: SchemaBlock) => {
+      const schemaItem = document.createElement('option')
+      schemaItem.classList.add('text-smoky', 'px-4', 'py-2')
+      schemaItem.innerText = elem.name
+      btnChooseConnectionSchema?.appendChild(schemaItem)
       dataElements.push(elem)
-      dataElementNames.push(Object.keys(elem)[0])
     })
   })
 }
