@@ -42,7 +42,6 @@ let tempFields: SchemaField[] = []
 
 btnCreateNewRow?.addEventListener('click', () => {
   const newField: SchemaField = {
-    key: schemaKey?.value || '',
     value: schemaValue?.value || '',
     type: schemaType?.value || '',
     required: schemaRequired?.checked || false
@@ -81,7 +80,6 @@ const btnChooseConnectionSchema: HTMLSelectElement | null = document.querySelect
 const generatedConnectionData: HTMLFormElement | null = document.querySelector('.generated-connection-data') // form generated from selected schema - based on JSON contents
 
 const dataElements: SchemaBlock[] = [] // individual elements received from the schema file
-const dataElementNames: SchemaBlock[] = []
 
 
 btnAddNewConnection?.addEventListener('click', () => {
@@ -108,7 +106,7 @@ if (document.body.dataset.windowType === "add-connection") {
 
       const schemaFormLabel = document.createElement('label')
       schemaFormLabel.setAttribute('for', dataElements[i].name)
-      schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].key as string
+      schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value as string
       const schemaFormInput = document.createElement('input')
       schemaFormInput.classList.add('text-smoky', 'border-2', 'rounded-md', 'px-4', 'py-2')
       schemaFormInput.id = dataElements[i].name
@@ -118,7 +116,7 @@ if (document.body.dataset.windowType === "add-connection") {
 
       generatedConnectionData?.appendChild(schemaFormBlock)
     }
-    console.log(currentlySelectedSchemaValues?.fields[0].key)
+    console.log(currentlySelectedSchemaValues?.fields[0].value)
   })
 }
 

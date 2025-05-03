@@ -30,7 +30,6 @@ export interface Schema {
 }
 
 export type SchemaField = {
-  key: string;
   value: string;
   type: string;
   required: boolean;

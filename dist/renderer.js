@@ -41,7 +41,6 @@
   var tempFields = [];
   btnCreateNewRow?.addEventListener("click", () => {
     const newField = {
-      key: schemaKey?.value || "",
       value: schemaValue?.value || "",
       type: schemaType?.value || "",
       required: schemaRequired?.checked || false
@@ -89,7 +88,7 @@
         schemaFormBlock.classList.add("flex", "flex-col");
         const schemaFormLabel = document.createElement("label");
         schemaFormLabel.setAttribute("for", dataElements[i].name);
-        schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].key;
+        schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value;
         const schemaFormInput = document.createElement("input");
         schemaFormInput.classList.add("text-smoky", "border-2", "rounded-md", "px-4", "py-2");
         schemaFormInput.id = dataElements[i].name;
@@ -97,7 +96,7 @@
         schemaFormBlock.append(schemaFormLabel, schemaFormInput);
         generatedConnectionData?.appendChild(schemaFormBlock);
       }
-      console.log(currentlySelectedSchemaValues?.fields[0].key);
+      console.log(currentlySelectedSchemaValues?.fields[0].value);
     });
   }
   function getSchemaList() {

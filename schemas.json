@@ -1,122 +1,46 @@
 [
   {
-    "name": "schema_users",
+    "name": "myschema",
     "fields": [
       {
-        "key": "username",
-        "value": "johndoe",
+        "value": "host",
         "type": "string",
-        "required": true
+        "required": false
       },
       {
-        "key": "email",
-        "value": "john@example.com",
+        "value": "username",
         "type": "string",
-        "required": true
+        "required": false
       },
       {
-        "key": "active",
-        "value": "true",
-        "type": "boolean",
+        "value": "password",
+        "type": "string",
+        "required": false
+      },
+      {
+        "value": "port",
+        "type": "number",
         "required": false
       }
     ]
   },
   {
-    "name": "schema_products",
+    "name": "schema_2",
     "fields": [
       {
-        "key": "product_id",
-        "value": "A123",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "name",
-        "value": "Widget",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "price",
-        "value": "19.99",
-        "type": "number",
-        "required": true
-      }
-    ]
-  },
-  {
-    "name": "schema_orders",
-    "fields": [
-      {
-        "key": "order_id",
-        "value": "ORD001",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "user_id",
-        "value": "johndoe",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "total",
-        "value": "29.99",
-        "type": "number",
-        "required": true
-      }
-    ]
-  },
-  {
-    "name": "schema_sessions",
-    "fields": [
-      {
-        "key": "session_id",
-        "value": "SESS001",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "user_id",
-        "value": "johndoe",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "timestamp",
-        "value": "2025-05-02T12:00:00Z",
-        "type": "string",
-        "required": true
-      }
-    ]
-  },
-  {
-    "name": "schema_logs",
-    "fields": [
-      {
-        "key": "log_id",
-        "value": "LOG001",
-        "type": "string",
-        "required": true
-      },
-      {
-        "key": "level",
-        "value": "info",
+        "value": "user",
         "type": "string",
         "required": false
       },
       {
-        "key": "message",
-        "value": "User logged in",
+        "value": "password",
         "type": "string",
-        "required": true
+        "required": false
       },
       {
-        "key": "timestamp",
-        "value": "2025-05-02T12:00:01Z",
-        "type": "string",
-        "required": true
+        "value": "moderator",
+        "type": "null",
+        "required": false
       }
     ]
   }
