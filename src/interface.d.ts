@@ -14,7 +14,7 @@ export interface Main {
   openAddConnectionWindow: () => void,
   fetchSchemaList: () => void,
   fetchSchemaListResponse: (response: object | string) => object | string
-  pushConnection: (content: object | string) => object | string
+  pushConnection: (content: Record<number, Record<string, string>>) => Record<number, Record<string, string>> // add connection to the connection list in main window
 }
 
 /**
@@ -29,12 +29,19 @@ export interface Schema {
   required: boolean
 }
 
+/**
+ * This is the name for an individual row of data in your schemas
+ */
 export type SchemaField = {
   value: string;
   type: string;
   required: boolean;
 }
 
+
+/**
+ * A single schema-like 'object', composed of multiple SchemaFields.
+ */
 export type SchemaBlock = {
   name: string
   fields: SchemaField[]

@@ -23,5 +23,5 @@ contextBridge.exposeInMainWorld('Main', {
 
   // this is the one you want
   fetchSchemaListResponse: (callback: (data: object) => void) => ipcRenderer.on('fetchSchemaListResponse', (_, data) => callback(data)),
-  pushConnection: (content: object | string) => ipcRenderer.send('pushConnection', content) //adds a new connection to the connection list
+  pushConnection: (content: Record<number, Record<string, string>>) => ipcRenderer.send('pushConnection', content) //adds a new connection to the connection list
 })

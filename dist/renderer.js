@@ -76,27 +76,8 @@
   });
   if (document.body.dataset.windowType === "add-connection") {
     getSchemaList();
-    console.log("SCHEMA LIST IS HERE");
     btnChooseConnectionSchema?.addEventListener("change", () => {
-      const currentlySelectedSchemaName = btnChooseConnectionSchema.value;
-      const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null;
-      if (generatedConnectionData?.hasChildNodes) {
-        generatedConnectionData.innerHTML = "";
-      }
-      for (let i = 0; i < dataElements.length; i++) {
-        const schemaFormBlock = document.createElement("div");
-        schemaFormBlock.classList.add("flex", "flex-col");
-        const schemaFormLabel = document.createElement("label");
-        schemaFormLabel.setAttribute("for", dataElements[i].name);
-        schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value;
-        const schemaFormInput = document.createElement("input");
-        schemaFormInput.classList.add("text-smoky", "border-2", "rounded-md", "px-4", "py-2");
-        schemaFormInput.id = dataElements[i].name;
-        schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value;
-        schemaFormBlock.append(schemaFormLabel, schemaFormInput);
-        generatedConnectionData?.appendChild(schemaFormBlock);
-      }
-      console.log(currentlySelectedSchemaValues?.fields[0].value);
+      generateConnectionFormFromSchema();
     });
   }
   function getSchemaList() {
@@ -111,4 +92,40 @@
       });
     });
   }
+  function generateConnectionFormFromSchema() {
+    const currentlySelectedSchemaName = btnChooseConnectionSchema?.value;
+    const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null;
+    if (generatedConnectionData?.hasChildNodes) {
+      generatedConnectionData.innerHTML = "";
+    }
+    for (let i = 0; i < dataElements.length; i++) {
+      const idToApply = `${currentlySelectedSchemaName}_${currentlySelectedSchemaValues?.fields[i].value}`;
+      const schemaFormBlock = document.createElement("div");
+      schemaFormBlock.classList.add("flex", "flex-col");
+      const schemaFormLabel = document.createElement("label");
+      schemaFormLabel.setAttribute("for", idToApply);
+      schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value;
+      const schemaFormInput = document.createElement("input");
+      schemaFormInput.classList.add("text-smoky", "border-2", "rounded-md", "px-4", "py-2");
+      schemaFormInput.id = idToApply;
+      schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value;
+      schemaFormBlock.append(schemaFormLabel, schemaFormInput);
+      generatedConnectionData?.appendChild(schemaFormBlock);
+    }
+  }
+  function parseConnectionData() {
+    const connectionDataContainer = {};
+    const arrayOfConnectionElements = Array.from(generatedConnectionData);
+    arrayOfConnectionElements?.forEach((elem, i) => {
+      const eK = elem.id;
+      const eV = elem.value;
+      connectionDataContainer[i] = { [eK]: eV };
+    });
+    console.log("Connection data container below :");
+    console.dir(connectionDataContainer);
+    return connectionDataContainer;
+  }
+  btnPushConnection?.addEventListener("click", () => {
+    window.Main.pushConnection(parseConnectionData());
+  });
 })();

@@ -99,3 +99,8 @@ ipcMain.on('fetchSchemaList', (e) => {
   }
   e.sender.send('fetchSchemaListResponse', (response))
 })
+
+
+ipcMain.on('pushConnection', (e, content) => {
+  console.log(content)
+})

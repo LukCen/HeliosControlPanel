@@ -39521,6 +39521,9 @@ import_electron.ipcMain.on("fetchSchemaList", (e) => {
   }
   e.sender.send("fetchSchemaListResponse", response);
 });
+import_electron.ipcMain.on("pushConnection", (e, content) => {
+  console.log(content);
+});
 /*! Bundled license information:
 
 long/umd/index.js:

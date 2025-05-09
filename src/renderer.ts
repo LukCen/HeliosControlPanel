@@ -78,51 +78,27 @@ const btnAddNewConnection: HTMLButtonElement | null = document.querySelector('bu
 const btnPushConnection: HTMLButtonElement | null = document.querySelector('button#btn-push-connection') // adds a new conn to the conn list
 const btnChooseConnectionSchema: HTMLSelectElement | null = document.querySelector('select') // schema select dropdown
 const generatedConnectionData: HTMLFormElement | null = document.querySelector('.generated-connection-data') // form generated from selected schema - based on JSON contents
-
+const connectionListContainer: HTMLUListElement | null = document.querySelector('.connection-container') // ul where connections will be inserted
 const dataElements: SchemaBlock[] = [] // individual elements received from the schema file
 
-
+// open connection window
 btnAddNewConnection?.addEventListener('click', () => {
   window.Main.openAddConnectionWindow()
 })
 
+
+// check for window type - will be used for all windows later on, prevents code from running from the wrong window
 if (document.body.dataset.windowType === "add-connection") {
   getSchemaList()
-  // const selectedSchema: HTMLOptionElement | null = document.querySelector("option").selected
-  console.log("SCHEMA LIST IS HERE")
+
   btnChooseConnectionSchema?.addEventListener('change', () => {
-    const currentlySelectedSchemaName = btnChooseConnectionSchema.value // currently selected schema name
-    const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null // currently selected schema object
-    // remove contents if has anything - anti-duplication measure
-    if (generatedConnectionData?.hasChildNodes) {
-      generatedConnectionData.innerHTML = ""
-    }
-
-    for (let i = 0; i < dataElements.length; i++) {
-      const schemaFormBlock = document.createElement('div') //box for the label/input pair
-
-
-      schemaFormBlock.classList.add('flex', 'flex-col')
-
-      const schemaFormLabel = document.createElement('label')
-      schemaFormLabel.setAttribute('for', dataElements[i].name)
-      schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value as string
-      const schemaFormInput = document.createElement('input')
-      schemaFormInput.classList.add('text-smoky', 'border-2', 'rounded-md', 'px-4', 'py-2')
-      schemaFormInput.id = dataElements[i].name
-      schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value as string
-
-      schemaFormBlock.append(schemaFormLabel, schemaFormInput)
-
-      generatedConnectionData?.appendChild(schemaFormBlock)
-    }
-    console.log(currentlySelectedSchemaValues?.fields[0].value)
+    generateConnectionFormFromSchema()
   })
 }
 
 function getSchemaList() {
-  window.Main.fetchSchemaList()
-  window.Main.fetchSchemaListResponse((data: object) => {
+  window.Main.fetchSchemaList() // extract schema data - sent from the main
+  window.Main.fetchSchemaListResponse((data: object) => { // parse and process data from the schema file
     (data as SchemaBlock[]).forEach((elem: SchemaBlock) => {
       const schemaItem = document.createElement('option')
       schemaItem.classList.add('text-smoky', 'px-4', 'py-2')
@@ -134,3 +110,61 @@ function getSchemaList() {
 }
 
 
+/**
+ * Goes through the selected schema, based on its JSON contents, and generates a form for establishing a connection. 
+ */
+function generateConnectionFormFromSchema() {
+  const currentlySelectedSchemaName = btnChooseConnectionSchema?.value // currently selected schema name
+  const currentlySelectedSchemaValues = dataElements.find((elem) => elem.name === currentlySelectedSchemaName) || null // currently selected schema object
+  // remove contents if has anything - anti-duplication measure
+  if (generatedConnectionData?.hasChildNodes) {
+    generatedConnectionData.innerHTML = ""
+  }
+
+  for (let i = 0; i < dataElements.length; i++) {
+    const idToApply = `${currentlySelectedSchemaName}_${currentlySelectedSchemaValues?.fields[i].value as string}`
+    const schemaFormBlock = document.createElement('div') //box for the label/input pair
+    schemaFormBlock.classList.add('flex', 'flex-col')
+
+    // create the label
+    const schemaFormLabel = document.createElement('label')
+    schemaFormLabel.setAttribute('for', idToApply)
+    schemaFormLabel.innerText = currentlySelectedSchemaValues?.fields[i].value as string
+
+    // create the input element
+    const schemaFormInput = document.createElement('input')
+    schemaFormInput.classList.add('text-smoky', 'border-2', 'rounded-md', 'px-4', 'py-2')
+    schemaFormInput.id = idToApply
+    schemaFormInput.placeholder = currentlySelectedSchemaValues?.fields[i].value as string
+
+    schemaFormBlock.append(schemaFormLabel, schemaFormInput)
+
+    generatedConnectionData?.appendChild(schemaFormBlock)
+  }
+}
+
+function parseConnectionData() {
+  const connectionDataContainer: Record<number, Record<string, string>> = {}
+  const arrayOfConnectionElements = Array.from(generatedConnectionData as unknown as NodeListOf<HTMLElement>)
+  arrayOfConnectionElements?.forEach((elem: any, i) => {
+    const eK: string = elem.id
+    const eV: string = elem.value
+    connectionDataContainer[i] = { [eK]: eV }
+  })
+  console.log("Connection data container below :")
+  console.dir(connectionDataContainer)
+  return connectionDataContainer
+}
+
+btnPushConnection?.addEventListener('click', () => {
+  const newConnectionItem: HTMLLIElement | null = document.createElement('li')
+  newConnectionItem.classList.add('flex', 'gap-2', 'items-center')
+
+  const newConnectionId: HTMLDivElement | null = document.createElement('div')
+  const newConnectionName: HTMLDivElement | null = document.createElement('div')
+  const newConnectionStatus: HTMLDivElement | null = document.createElement('div')
+
+  const newConnectionButtonsContainer: HTMLDivElement | null = document.createElement('div')
+  const newConnectionButtonRemove: HTMLButtonElement | null = document.createElement('button')
+  const newConnectionButtonDetails: HTMLButtonElement | null = document.createElement('button')
+})
