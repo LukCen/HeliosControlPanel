@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../public/assets/output.css">
+  <title>Add new schema</title>
+</head>
+
+<body class="text-smoky">
+  <main class="h-full w-full bg-night-sky flex flex-col items-center">
+    <menu class="main-navbar flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
+      <div class="flex items-center w-full gap-3">
+        <img src="../../../public/assets/icon-connection-list.webp" alt="">
+        <span>Create new schema</span>
+      </div>
+      <div class="flex">
+        <button title="Close window"
+          class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150"><img
+            src="../../../public/assets/icon-close.webp" alt=""></button>
+      </div>
+    </menu>
+    <form action="" class="flex flex-col justify-center w-2/4 p-5">
+      <!-- schema name -->
+      <fieldset class="border-2 border-smoky w-fill flex flex-col gap-2 p-5 rounded-xl">
+        <div class="schema-name flex flex-col w-full gap-2">
+          <label class="text-center w-full text-4xl" for="schema-name">New schema name</label>
+          <input class="border border-violet p-1 rounded-md" id="schema-name" type="text"
+            placeholder="Your New schema Name">
+        </div>
+      </fieldset>
+      <fieldset class="border-2 border-smoky w-full flex flex-col gap-2 p-5 rounded-xl">
+        <!-- schema value -->
+        <div class="schema-value flex flex-col">
+          <label for="schema-value">Value</label>
+          <input class="border border-violet p-1 rounded-md" type="text" id="schema-value" placeholder="host">
+        </div>
+        <div class="schema-type flex flex-col">
+          <label for="schema-type">Type</label>
+          <select class="border gap-1 border-violet p-1 rounded-md" name="schema-type" id="schema-type">
+            <option class="border border-violet bg-night-sky" value="string" selected>string</option>
+            <option class="border border-violet bg-night-sky" value="number">number</option>
+            <option class="border border-violet bg-night-sky" value="object">object</option>
+            <option class="border border-violet bg-night-sky" value="array">array</option>
+            <option class="border border-violet bg-night-sky" value="null">null</option>
+          </select>
+        </div>
+        <input type="checkbox" name="required" id="schema-required">Required?
+        <button type="button" id="add-new-row"
+          class="bg-violet py-1 px-2 flex items-center justify-center min-w-[150px] rounded-md border border-violet hover:border-smoky transition-colors duration-150">Add
+          new row</button>
+      </fieldset>
+    </form>
+    <ul class="schema-rows even:bg-plum odd:bg-violet"></ul>
+    <div id="schema-preview">
+      <code>
+        This is an example window
+      </code>
+      <button id="add-new-schema"
+        class="bg-violet py-1 px-2 flex items-center justify-center min-w-[150px] rounded-md border border-violet hover:border-smoky transition-colors duration-150">Create
+        new schema</button>
+    </div>
+  </main>
+  <script src="../../../dist/renderer-schema.js"></script>
+</body>
+
+</html>

@@ -5,26 +5,19 @@ export interface Main {
    * @returns no return value, executes an action
    */
   defaultWindowControls: (payload: string) => void
-  "connection:openWindow": () => void,
+
   /**
    *  Opens a window for creating new schemas
    */
   openNewSchemaWindow: () => void
-  "schema:writeToFile": (contentToWrite: unknown) => void, // func for writing to schema file - rename later
-
+  bridgeFunction: (contentToWrite: unknown) => void, // func for writing to schema file - rename later
+  openAddConnectionWindow: () => void,
+  fetchSchemaList: () => void,
+  fetchSchemaListResponse: (response: object | string) => object | string
+  pushConnection: () => void // add connection to the connection list in main window,
+  pushConnectionItem: (cb: () => void) => void
 }
 
-export interface SchemaWindow {
-  defaultWindowControls: (payload: string) => void
-}
-export interface Connection {
-  defaultWindowControls: (payload: string) => void
-
-  "connection:fetchSchemaList": () => void,
-  "connection:fetchSchemaListResponse": (response: object | string) => object | string
-  "connection:pushConnection": () => void // add connection to the connection list in main window,
-  "connection:pushConnectionItem": (cb: () => void) => void
-}
 /**
  * Interface with types for creating new schema objects ('blueprints' for your database requests) - used in addSchema window
  * Key-value pairs are added via a local function called 'generateSchemaRow'
@@ -57,8 +50,6 @@ export type SchemaBlock = {
 
 declare global {
   interface Window {
-    Main: Main,
-    SchemaWindow: SchemaWindow,
-    Connection: Connection
+    Main: Main
   }
 }

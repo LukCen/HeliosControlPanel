@@ -39436,6 +39436,7 @@ function readFromFile(file) {
 }
 
 // src/main.ts
+console.log("MAIN JS LOADED CORRECTLY");
 var createWindow = () => {
   const win = new import_electron.BrowserWindow({
     width: 1600,
@@ -39445,11 +39446,11 @@ var createWindow = () => {
     titleBarStyle: "hidden",
     // for macOS, apparently
     webPreferences: {
-      preload: import_node_path.default.join(__dirname, "./preload.js")
+      preload: import_node_path.default.join(__dirname, "./preload-main.js")
     }
   });
   win.setMenuBarVisibility(false);
-  win.loadFile("../public/html/main.html");
+  win.loadFile("../src/pages/main/index.html");
 };
 import_electron.app.whenReady().then(() => {
   createWindow();
@@ -39481,12 +39482,12 @@ import_electron.ipcMain.on("openNewSchemaWindow", (e) => {
       titleBarStyle: "hidden",
       // for macOS, apparently
       webPreferences: {
-        preload: import_node_path.default.join(__dirname, "./preload.js")
+        preload: import_node_path.default.join(__dirname, "./preload-schema.js")
       },
       parent: mainWin
     });
     schemaWin.setMenuBarVisibility(false);
-    schemaWin.loadFile("../public/html/addSchema.html");
+    schemaWin.loadFile("../src/pages/schema/index.html");
   }
 });
 import_electron.ipcMain.on("openAddConnectionWindow", (e) => {
@@ -39500,15 +39501,15 @@ import_electron.ipcMain.on("openAddConnectionWindow", (e) => {
       titleBarStyle: "hidden",
       // for macOS, apparently
       webPreferences: {
-        preload: import_node_path.default.join(__dirname, "./preload.js")
+        preload: import_node_path.default.join(__dirname, "./preload-connection.js")
       },
       parent: mainWin
     });
     addConnectionWin.setMenuBarVisibility(false);
-    addConnectionWin.loadFile("../public/html/addConnection.html");
+    addConnectionWin.loadFile("../src/pages/connection/index.html");
   }
 });
-import_electron.ipcMain.on("bridgeFunction", (e, content) => {
+import_electron.ipcMain.on("schema:writeToFile", (e, content) => {
   const pathToFile = import_node_path.default.join(__dirname, "../schemas.json");
   writeToFileNew(pathToFile, content);
 });
@@ -39521,8 +39522,13 @@ import_electron.ipcMain.on("fetchSchemaList", (e) => {
   }
   e.sender.send("fetchSchemaListResponse", response);
 });
-import_electron.ipcMain.on("pushConnection", (e, content) => {
-  console.log(content);
+import_electron.ipcMain.on("pushConnection", (e) => {
+  const allWindows = import_electron.BrowserWindow.getAllWindows();
+  const targetWindow = allWindows.find((w) => w.webContents !== e.sender);
+  if (targetWindow) {
+    targetWindow.webContents.send("pushConnectionItem");
+  }
+  console.log("pushConnection executed");
 });
 /*! Bundled license information:
 

@@ -6,8 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:main": "esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --external:electron",
-    "build:preload": "esbuild src/preload.ts --bundle --platform=node --outfile=dist/preload.js --external:electron",
-    "build:renderer": "esbuild src/renderer.ts --bundle --platform=browser --outfile=dist/renderer.js --external:electron",
+    "build:preload:main": "esbuild src/pages/main/preload.ts --bundle --platform=node --outfile=dist/preload-main.js --external:electron",
+    "build:preload:schema": "esbuild src/pages/schema/preload.ts --bundle --platform=node --outfile=dist/preload-schema.js --external:electron",
+    "build:preload:connection": "esbuild src/pages/connection/preload.ts --bundle --platform=node --outfile=dist/preload-connection.js --external:electron",
+    "build:renderer:main": "esbuild src/pages/main/renderer.ts --bundle --platform=browser --outfile=dist/renderer-main.js --external:electron",
+    "build:renderer:schema": "esbuild src/pages/schema/renderer.ts --bundle --platform=browser --outfile=dist/renderer-schema.js --external:electron",
+    "build:renderer:connection": "esbuild src/pages/connection/renderer.ts --bundle --platform=browser --outfile=dist/renderer-connection.js --external:electron",
+    "build:preload": "npm run build:preload:main && npm run build:preload:schema && npm run build:preload:connection",
+    "build:renderer": "npm run build:renderer:main && npm run build:renderer:schema && npm run build:renderer:connection",
     "build": "npm run build:main && npm run build:preload && npm run build:renderer",
     "twcompile": "npx @tailwindcss/cli -i ./public/assets/input.css -o ./public/assets/output.css",
     "start": "npm run twcompile && npm run build && electron dist/main.js"

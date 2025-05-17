@@ -1,9 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron"
-import path from 'node:path'
+import path from "node:path"
 import { colorLog } from "utils-dom"
 import { readFromFile, writeToFileNew } from "utils-node"
 
 
+console.log('MAIN JS LOADED CORRECTLY')
 
 
 const createWindow = () => {
@@ -13,11 +14,11 @@ const createWindow = () => {
     frame: false, // hides the default title bar and controls
     titleBarStyle: 'hidden', // for macOS, apparently
     webPreferences: {
-      preload: path.join(__dirname, './preload.js'),
+      preload: path.join(__dirname, './preload-main.js'),
     }
   })
   win.setMenuBarVisibility(false)
-  win.loadFile('../public/html/main.html')
+  win.loadFile('../src/pages/main/index.html')
 }
 
 
@@ -53,12 +54,12 @@ ipcMain.on('openNewSchemaWindow', (e) => {
       frame: false, // hides the default title bar and controls
       titleBarStyle: 'hidden', // for macOS, apparently
       webPreferences: {
-        preload: path.join(__dirname, './preload.js'),
+        preload: path.join(__dirname, './preload-schema.js'),
       },
       parent: mainWin
     })
     schemaWin.setMenuBarVisibility(false)
-    schemaWin.loadFile('../public/html/addSchema.html')
+    schemaWin.loadFile('../src/pages/schema/index.html')
   }
 })
 
@@ -72,26 +73,24 @@ ipcMain.on('openAddConnectionWindow', (e) => {
       frame: false, // hides the default title bar and controls
       titleBarStyle: 'hidden', // for macOS, apparently
       webPreferences: {
-        preload: path.join(__dirname, './preload.js'),
+        preload: path.join(__dirname, './preload-connection.js'),
       },
       parent: mainWin
     })
     addConnectionWin.setMenuBarVisibility(false)
-    addConnectionWin.loadFile('../public/html/addConnection.html')
+    addConnectionWin.loadFile('../src/pages/connection/index.html')
 
   }
 
 })
 
-ipcMain.on('bridgeFunction', (e, content) => {
+ipcMain.on('schema:writeToFile', (e, content) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
   writeToFileNew(pathToFile, content)
 })
 
 ipcMain.on('fetchSchemaList', (e) => {
   const pathToFile = path.join(__dirname, '../schemas.json')
-  // colorLog('schemas.json contents below', 'cyan')
-  // console.dir(readFromFile(pathToFile), { depth: null })
   const response = readFromFile(pathToFile)
   colorLog('response logged in the fetchSchemaList binding', 'cyan')
   if (response) {
@@ -101,6 +100,11 @@ ipcMain.on('fetchSchemaList', (e) => {
 })
 
 
-ipcMain.on('pushConnection', (e, content) => {
-  console.log(content)
+ipcMain.on('pushConnection', (e) => {
+  const allWindows = BrowserWindow.getAllWindows()
+  const targetWindow = allWindows.find(w => w.webContents !== e.sender)
+  if (targetWindow) {
+    targetWindow.webContents.send('pushConnectionItem')
+  }
+  console.log('pushConnection executed')
 })

@@ -1,8 +1,8 @@
 "use strict";
 
-// src/preload.ts
+// src/pages/main/preload.ts
 var import_electron = require("electron");
-console.log("preload loaded");
+console.log("MAIN preload loaded");
 import_electron.contextBridge.exposeInMainWorld("Main", {
   // main menu navbar - topside of main window
   defaultWindowControls: (payload) => import_electron.ipcRenderer.send("defaultWindowControls", payload),
@@ -16,11 +16,11 @@ import_electron.contextBridge.exposeInMainWorld("Main", {
    */
   bridgeFunction: (contentToWrite) => import_electron.ipcRenderer.send("bridgeFunction", contentToWrite),
   // add connections
-  openAddConnectionWindow: () => import_electron.ipcRenderer.send("openAddConnectionWindow"),
+  "connection:openWindow": () => import_electron.ipcRenderer.send("openAddConnectionWindow"),
   fetchSchemaList: () => import_electron.ipcRenderer.send("fetchSchemaList"),
-  // returns the contents of schemas.json if not empty
+  // returns the contents of schemas.json if not empty,
   // this is the one you want
   fetchSchemaListResponse: (callback) => import_electron.ipcRenderer.on("fetchSchemaListResponse", (_, data) => callback(data)),
-  pushConnection: (content) => import_electron.ipcRenderer.send("pushConnection", content)
-  //adds a new connection to the connection list
+  pushConnection: () => import_electron.ipcRenderer.send("pushConnection"),
+  pushConnectionItem: (cb) => import_electron.ipcRenderer.on("pushConnectionItem", cb)
 });

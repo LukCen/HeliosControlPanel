@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../assets/output.css">
+  <link rel="stylesheet" href="../../../public/assets/output.css">
 
   <title>Helios</title>
 </head>
@@ -14,32 +14,37 @@
     <!-- main menu - topside of the window -->
     <menu class="main-navbar flex justify-between w-full bg-midnight max-h-[50px] border-2 border-violet">
       <div class="flex">
-        <img src="../assets/logo.jpg" alt="Helios logo" width="50" height="50">
+        <img src="../../../public/assets/logo.jpg" alt="Helios logo" width="50" height="50">
         <span class="text-[36px] px-[5px]">Helios Control Panel</span>
       </div>
       <div class="flex">
         <button title="Add new schema"
           class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-add-schema.webp" alt="" width="40" height="40">
+          <img class="max-w-[40px] max-h-[40px]" src="../../../public/assets/icon-add-schema.webp" alt="" width="40"
+            height="40">
         </button>
         <button title="Settings"
           class="bg-night-sky flex items-center justify-center w-[150px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-settings.webp" alt="" width="40" height="40">
+          <img class="max-w-[40px] max-h-[40px]" src="../../../public/assets/icon-settings.webp" alt="" width="40"
+            height="40">
         </button>
       </div>
       <div class="flex">
 
         <button title="Minimize window"
           class="bg-night-sky flex items-center justify-center w-[75px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-min.webp" alt="" width="40" height="40">
+          <img class="max-w-[40px] max-h-[40px]" src="../../../public/assets/icon-min.webp" alt="" width="40"
+            height="40">
         </button>
         <button title="Maximize window"
           class="bg-night-sky flex items-center justify-center w-[75px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-max.webp" alt="" width="40" height="40">
+          <img class="max-w-[40px] max-h-[40px]" src="../../../public/assets/icon-max.webp" alt="" width="40"
+            height="40">
         </button>
         <button title="Close window"
           class="bg-night-sky flex items-center justify-center w-[75px] border border-violet hover:border-smoky transition-colors duration-150">
-          <img class="max-w-[40px] max-h-[40px]" src="../assets/icon-close.webp" alt="" width="40" height="40">
+          <img class="max-w-[40px] max-h-[40px]" src="../../../public/assets/icon-close.webp" alt="" width="40"
+            height="40">
         </button>
       </div>
     </menu>
@@ -53,15 +58,15 @@
         <div class="flex h-fit">
           <button id="btn-add-connection"
             class="btn-add-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
-            <img src="../assets/icon-add.webp" width="30" height="30" alt="">
+            <img src="../../../public/assets/icon-add.webp" width="30" height="30" alt="">
           </button>
           <button
             class="btn-filter-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
-            <img src="../assets/icon-filter.webp" width="30" height="30" alt="">
+            <img src="../../../public/assets/icon-filter.webp" width="30" height="30" alt="">
           </button>
           <button
             class="btn-refresh-connection flex grow-1 shrink-1 basis-[33.33%] w-[150px] bg-night-sky justify-center items-center p-1 border-1 border-violet hover:border-smoky transition-colors duration-150">
-            <img src="../assets/icon-refresh.webp" width="30" height="30" alt="">
+            <img src="../../../public/assets/icon-refresh.webp" width="30" height="30" alt="">
           </button>
         </div>
       </nav>
@@ -73,10 +78,10 @@
             <div class="connection-status"></div>
             <div class="connection-buttons">
               <button data-type="delete" class="flex items-center justify-center p-2">
-                <img src="../assets/icon-delete.webp" alt="">
+                <img src="../../../public/assets/icon-delete.webp" alt="">
               </button>
               <button data-type="details" class="flex items-center justify-center p-2">
-                <img src="../assets/icon-details.webp" alt="">
+                <img src="../../../public/assets/icon-details.webp" alt="">
               </button>
             </div>
           </div>
@@ -85,7 +90,7 @@
     </div>
   </main>
 
-  <script src="../../dist/renderer.js"></script>
+  <script src="../../../dist/renderer-main.js"></script>
 </body>
 
 </html>
